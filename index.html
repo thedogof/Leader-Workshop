@@ -6,11 +6,11 @@
   <title>國際雙語教育課程領導人工作坊｜線上簽到</title>
   <style>
     :root { --bg:#f7fafc; --card:#ffffff; --ink:#1a202c; --muted:#718096; --accent:#2563eb; }
-    *{box-sizing:border-box} 
+    *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink)}
     .wrap{max-width:560px;margin:4rem auto;padding:24px}
     .card{background:var(--card);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:28px}
-    h1{font-size:1.25rem;margin:0 0 4px} 
+    h1{font-size:1.25rem;margin:0 0 4px}
     .sub{color:var(--muted);font-size:.95rem;margin:0 0 18px}
     label{display:block;font-weight:600;margin:.75rem 0 .4rem}
     input{width:100%;padding:12px 14px;border:1px solid #e2e8f0;border-radius:12px;font-size:1rem}
@@ -31,7 +31,7 @@
       <p class="sub">線上簽到（請填寫：單位／職稱／姓名）</p>
 
       <form id="form" autocomplete="on">
-        <label for="unit">單位（例：龍科國小）</label>
+        <label for="unit">單位（例：大園國小）</label>
         <input id="unit" name="unit" required maxlength="40" placeholder="請輸入單位" />
 
         <div class="row">
@@ -80,12 +80,13 @@
         return;
       }
 
+      const qs = new URLSearchParams({ unit, title, name }).toString();
       const body = new URLSearchParams({ unit, title, name });
 
       btn.disabled = true; btn.textContent = '送出中⋯';
 
       try{
-        const res = await fetch(ENDPOINT, {
+        const res = await fetch(`${ENDPOINT}?${qs}`, {
           method: 'POST',
           body // 不設定 Content-Type，瀏覽器會自動使用 x-www-form-urlencoded
         });
