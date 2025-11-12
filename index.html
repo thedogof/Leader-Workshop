@@ -1,0 +1,210 @@
+# 檔案 1：`signin.html`
+
+```html
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>國際雙語教育課程領導人工作坊｜線上簽到</title>
+  <style>
+    :root { --bg:#f7fafc; --card:#ffffff; --ink:#1a202c; --muted:#718096; --accent:#2563eb; }
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink)}
+    .wrap{max-width:560px;margin:4rem auto;padding:24px}
+    .card{background:var(--card);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:28px}
+    h1{font-size:1.25rem;margin:0 0 4px} .sub{color:var(--muted);font-size:.95rem;margin:0 0 18px}
+    label{display:block;font-weight:600;margin:.75rem 0 .4rem}
+    input{width:100%;padding:12px 14px;border:1px solid #e2e8f0;border-radius:12px;font-size:1rem}
+    input:focus{outline:2px solid rgba(37,99,235,.25);border-color:var(--accent)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    button{width:100%;margin-top:18px;padding:12px 16px;border:0;border-radius:12px;background:var(--accent);color:#fff;font-weight:700;font-size:1rem;cursor:pointer}
+    button[disabled]{opacity:.6;cursor:not-allowed}
+    .note{font-size:.9rem;color:var(--muted);margin-top:10px}
+    .success{display:none;margin-top:14px;padding:12px;border-radius:10px;background:#e6fffa;color:#065f46;border:1px solid #99f6e4}
+    .error{display:none;margin-top:14px;padding:12px;border-radius:10px;background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+    .footer{margin-top:22px;color:var(--muted);font-size:.85rem}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>國際雙語教育課程領導人工作坊</h1>
+      <p class="sub">線上簽到（請填寫：單位／職稱／姓名）</p>
+
+      <form id="form" autocomplete="on">
+        <label for="unit">單位（例：大園國小）</label>
+        <input id="unit" name="unit" required maxlength="40" placeholder="請輸入單位" />
+
+        <div class="row">
+          <div>
+            <label for="title">職稱（例：校長）</label>
+            <input id="title" name="title" required maxlength="20" placeholder="請輸入職稱" />
+          </div>
+          <div>
+            <label for="name">姓名（例：王ＯＯ）</label>
+            <input id="name" name="name" required maxlength="20" placeholder="請輸入姓名" />
+          </div>
+        </div>
+
+        <button id="submitBtn" type="submit">送出簽到</button>
+        <div class="note">送出後會自動記錄時間與IP（僅作為一次簽到之用）。</div>
+        <div id="ok" class="success">簽到成功！感謝您的參與，祝活動順利。</div>
+        <div id="ng" class="error">送出失敗，請稍後再試或洽工作人員。</div>
+      </form>
+
+      <div class="footer">© 桃園市國際雙語教育課程領導人工作坊</div>
+    </div>
+  </div>
+
+  <script>
+    const ENDPOINT = "YOUR_WEB_APP_URL_HERE"; // ← 之後貼上 Apps Script 部署後的網址
+
+    const form = document.getElementById('form');
+    const ok = document.getElementById('ok');
+    const ng = document.getElementById('ng');
+    const btn = document.getElementById('submitBtn');
+
+    function sanitize(s){ return (s||'').toString().trim().replace(/[\n\r\t]+/g,' '); }
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      ok.style.display = 'none';
+      ng.style.display = 'none';
+
+      const payload = {
+        unit: sanitize(form.unit.value),
+        title: sanitize(form.title.value),
+        name: sanitize(form.name.value),
+      };
+
+      // 簡易前端驗證
+      if(!payload.unit || !payload.title || !payload.name){
+        ng.textContent = '請完整填寫三個欄位';
+        ng.style.display = 'block';
+        return;
+      }
+
+      // 防連點
+      btn.disabled = true; btn.textContent = '送出中⋯';
+
+      try{
+        const res = await fetch(ENDPOINT, {
+          method:'POST',
+          headers:{ 'Content-Type':'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if(data && data.ok){
+          ok.style.display = 'block';
+          form.reset();
+          // 標記已簽到，避免重複（同裝置）
+          try{ localStorage.setItem('signedAt', String(Date.now())); }catch(err){}
+        }else{
+          ng.textContent = (data && data.message) ? data.message : '送出失敗，請稍後再試';
+          ng.style.display = 'block';
+        }
+      }catch(err){
+        ng.textContent = '無法連線至簽到系統，請稍後再試';
+        ng.style.display = 'block';
+      }finally{
+        btn.disabled = false; btn.textContent = '送出簽到';
+      }
+    });
+  </script>
+</body>
+</html>
+```
+
+---
+
+# 檔案 2：`Code.gs`（Google Apps Script）
+
+> 功能：接收表單 JSON，寫入 Google 試算表。部署為「網頁應用程式」後，取得 URL 貼回 `signin.html` 的 `ENDPOINT`。
+
+```javascript
+/**
+ * 專案使用前請先：
+ * 1) 建立一個 Google 試算表，將其試算表 ID 複製到 SHEET_ID。
+ *    （試算表網址中 /d/ 與 /edit 之間那段即為 ID）
+ * 2) 在此試算表中新建工作表（分頁）名稱，貼到 SHEET_NAME（可用預設）。
+ * 3) 部署：發佈 → 部署為網頁應用程式 → 類型選「網頁應用程式」→ 設為「任何人」可存取。
+ */
+
+const SHEET_ID  = 'PUT_YOUR_SHEET_ID_HERE';
+const SHEET_NAME = '簽到名單';
+
+function doPost(e){
+  try{
+    const tz = 'Asia/Taipei';
+    const ua = e && e.postData ? e.postData.type : '';
+    let data = {};
+
+    if(e && e.postData && e.postData.contents){
+      if(ua && ua.indexOf('application/json') > -1){
+        data = JSON.parse(e.postData.contents);
+      }else{
+        // 若不是 JSON，嘗試以 querystring 解析
+        const params = e.parameter || {};
+        data = { unit: params.unit, title: params.title, name: params.name };
+      }
+    }
+
+    const unit  = (data.unit  || '').toString().trim();
+    const title = (data.title || '').toString().trim();
+    const name  = (data.name  || '').toString().trim();
+
+    if(!unit || !title || !name){
+      return json({ ok:false, message:'缺少必填欄位' }, 400);
+    }
+
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    let sh = ss.getSheetByName(SHEET_NAME);
+    if(!sh){ sh = ss.insertSheet(SHEET_NAME); }
+
+    // 如果是新表，先寫入表頭
+    if(sh.getLastRow() === 0){
+      sh.appendRow(['時間(台北)', '單位', '職稱', '姓名', 'IP', '使用者代理 UA']);
+    }
+
+    const time = Utilities.formatDate(new Date(), tz, 'yyyy/MM/dd HH:mm:ss');
+    const ip = getClientIp_(e);
+    const userAgent = (e && e.postData && e.postData.contents && e.postData.type) ? (e.postData.type) : (e && e.parameter && e.parameter.userAgent) || '';
+
+    sh.appendRow([time, unit, title, name, ip, e && e.headers ? e.headers['User-Agent'] : '']);
+
+    return json({ ok:true });
+  }catch(err){
+    return json({ ok:false, message: String(err) }, 500);
+  }
+}
+
+function json(obj, code){
+  const output = ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+  if(code){
+    return HtmlService.createHtmlOutput(JSON.stringify(obj)).setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
+  return output;
+}
+
+// 嘗試取得使用者 IP（Apps Script 無保證）
+function getClientIp_(e){
+  try{
+    if(e && e.headers){
+      return e.headers['X-Forwarded-For'] || e.headers['x-forwarded-for'] || '';
+    }
+  }catch(err){}
+  return '';
+}
+```
+
+---
+
+## 快速設定（摘要）
+
+1. **建立試算表**：新增一份 Google 試算表，複製網址中的 **試算表 ID**。
+2. **建立 Apps Script**：在該試算表 → 擴充功能 → App Script，貼上 `Code.gs`，將 `SHEET_ID` 換成你的 ID。
+3. **部署為網頁應用程式**：權限選「任何人」，複製部署後的 **Web App URL**。
+4. **修改前端**：把 `signin.html` 裡的 `ENDPOINT` 換成這個 URL，發給來賓或放學校網站／掃 QR 即可使用。
+
+> 備註：若機關僅允許 Google Form，也可直接用 Google 表單建立同欄位，照樣收集；本專案提供更客製化的外觀與前端驗證。
