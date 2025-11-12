@@ -6,10 +6,12 @@
   <title>國際雙語教育課程領導人工作坊｜線上簽到</title>
   <style>
     :root { --bg:#f7fafc; --card:#ffffff; --ink:#1a202c; --muted:#718096; --accent:#2563eb; }
-    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink)}
+    *{box-sizing:border-box} 
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink)}
     .wrap{max-width:560px;margin:4rem auto;padding:24px}
     .card{background:var(--card);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:28px}
-    h1{font-size:1.25rem;margin:0 0 4px} .sub{color:var(--muted);font-size:.95rem;margin:0 0 18px}
+    h1{font-size:1.25rem;margin:0 0 4px} 
+    .sub{color:var(--muted);font-size:.95rem;margin:0 0 18px}
     label{display:block;font-weight:600;margin:.75rem 0 .4rem}
     input{width:100%;padding:12px 14px;border:1px solid #e2e8f0;border-radius:12px;font-size:1rem}
     input:focus{outline:2px solid rgba(37,99,235,.25);border-color:var(--accent)}
@@ -19,7 +21,7 @@
     .note{font-size:.9rem;color:var(--muted);margin-top:10px}
     .success{display:none;margin-top:14px;padding:12px;border-radius:10px;background:#e6fffa;color:#065f46;border:1px solid #99f6e4}
     .error{display:none;margin-top:14px;padding:12px;border-radius:10px;background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
-    .footer{margin-top:22px;color:var(--muted);font-size:.85rem}
+    .footer{margin-top:22px;color:var(--muted);font-size:.85rem;text-align:center}
   </style>
 </head>
 <body>
@@ -29,7 +31,7 @@
       <p class="sub">線上簽到（請填寫：單位／職稱／姓名）</p>
 
       <form id="form" autocomplete="on">
-        <label for="unit">單位（例：大園國小）</label>
+        <label for="unit">單位（例：龍科國小）</label>
         <input id="unit" name="unit" required maxlength="40" placeholder="請輸入單位" />
 
         <div class="row">
@@ -54,47 +56,43 @@
   </div>
 
   <script>
-    const ENDPOINT = "https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec"; // ← 之後貼上 Apps Script 部署後的網址
+    const ENDPOINT = "https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec";
 
     const form = document.getElementById('form');
     const ok = document.getElementById('ok');
     const ng = document.getElementById('ng');
     const btn = document.getElementById('submitBtn');
 
-    function sanitize(s){ return (s||'').toString().trim().replace(/[\n\r\t]+/g,' '); }
+    function sanitize(s){ return (s||'').toString().trim().replace(/[\\n\\r\\t]+/g,' '); }
 
     form.addEventListener('submit', async (e)=>{
       e.preventDefault();
       ok.style.display = 'none';
       ng.style.display = 'none';
 
-      const payload = {
-        unit: sanitize(form.unit.value),
-        title: sanitize(form.title.value),
-        name: sanitize(form.name.value),
-      };
+      const unit  = sanitize(form.unit.value);
+      const title = sanitize(form.title.value);
+      const name  = sanitize(form.name.value);
 
-      // 簡易前端驗證
-      if(!payload.unit || !payload.title || !payload.name){
+      if(!unit || !title || !name){
         ng.textContent = '請完整填寫三個欄位';
         ng.style.display = 'block';
         return;
       }
 
-      // 防連點
+      const body = new URLSearchParams({ unit, title, name });
+
       btn.disabled = true; btn.textContent = '送出中⋯';
 
       try{
         const res = await fetch(ENDPOINT, {
-          method:'POST',
-          headers:{ 'Content-Type':'application/json' },
-          body: JSON.stringify(payload)
+          method: 'POST',
+          body // 不設定 Content-Type，瀏覽器會自動使用 x-www-form-urlencoded
         });
         const data = await res.json();
         if(data && data.ok){
           ok.style.display = 'block';
           form.reset();
-          // 標記已簽到，避免重複（同裝置）
           try{ localStorage.setItem('signedAt', String(Date.now())); }catch(err){}
         }else{
           ng.textContent = (data && data.message) ? data.message : '送出失敗，請稍後再試';
