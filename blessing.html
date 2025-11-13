@@ -99,7 +99,7 @@
   </header>
   <main>
     <div id="placeholder">
-      螢幕目前尚無祝福訊息，請貴賓於簽到頁面留下「迎賓祝福小語」，畫面將自動更新。
+      目前尚無祝福訊息，請貴賓於簽到頁面留下「迎賓祝福小語」，畫面將自動更新。
     </div>
     <div class="marquee-container"><div class="marquee-content" id="mq1"></div></div>
     <div class="marquee-container"><div class="marquee-content" id="mq2"></div></div>
@@ -108,7 +108,8 @@
   </main>
 
   <script>
-    const ENDPOINT = "https://script.google.com/macros/s/AKfycbx3Ctad6gLBPtq37VhO9kIC80SwTKVlYymODj0DJWI9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec";
+    // 換成同一條 Web App URL
+    const ENDPOINT = "https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec";
 
     const mqs = [
       document.getElementById('mq1'),
@@ -157,7 +158,7 @@
     function loadBlessings(){
       const cbName = 'bless_cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
       const script = document.createElement('script');
-      script.src = ENDPOINT + '?mode=blessJSONP&callback=' + cbName;
+      script.src = ENDPOINT + '?mode=listBlessings&callback=' + cbName;
 
       window[cbName] = function(data){
         try{
