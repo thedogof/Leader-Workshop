@@ -18,6 +18,7 @@
     .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     button{width:100%;margin-top:18px;padding:12px 16px;border:0;border-radius:12px;background:var(--accent);color:#fff;font-weight:700;font-size:1rem;cursor:pointer}
     .footer{margin-top:22px;color:var(--muted);font-size:.85rem;text-align:center}
+    .note{font-size:.9rem;color:var(--muted);margin-top:10px}
   </style>
 </head>
 <body>
@@ -26,7 +27,7 @@
       <h1>國際雙語教育課程領導人工作坊</h1>
       <p class="sub">線上簽到（請填寫：單位／職稱／姓名）</p>
 
-      <!-- 這裡重點：直接用 HTML 表單 POST 到 Apps Script -->
+      <!-- 純 HTML 表單，直接 POST 到 Apps Script -->
       <form
         method="POST"
         action="https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec"
@@ -46,7 +47,7 @@
         </div>
 
         <button type="submit">送出簽到</button>
-        <p class="note">送出後系統會自動記錄簽到時間。</p>
+        <p class="note">送出後會自動記錄簽到時間與IP（僅作為一次簽到之用）。</p>
       </form>
 
       <div class="footer">© 桃園市國際雙語教育課程領導人工作坊</div>
