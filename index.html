@@ -27,31 +27,44 @@
       overflow:hidden;
       z-index:0;
       pointer-events:none;
-      opacity:0.4; /* 提高透明度：祝福字比較清楚 */
+      opacity:1; /* 讓字本身清楚，對比用深色帶控制 */
     }
     .bg-gradient{
       position:absolute;
       inset:0;
       background:
-        radial-gradient(circle at top left,rgba(59,130,246,.25) 0,transparent 55%),
-        radial-gradient(circle at bottom right,rgba(251,191,36,.25) 0,transparent 55%);
-      mix-blend-mode:screen;
-      opacity:.85;
+        radial-gradient(circle at top left,rgba(59,130,246,.18) 0,transparent 55%),
+        radial-gradient(circle at bottom right,rgba(251,191,36,.18) 0,transparent 55%);
+      opacity:.9;
     }
     .bg-row{
       position:absolute;
       left:0;
       right:0;
-      height:20%;
+      height:18%;
       display:flex;
       align-items:center;
       white-space:nowrap;
       overflow:hidden;
     }
-    .bg-row:nth-child(1){ top:10%; }
-    .bg-row:nth-child(2){ top:35%; }
+    .bg-row:nth-child(1){ top:12%; }
+    .bg-row:nth-child(2){ top:36%; }
     .bg-row:nth-child(3){ top:60%; }
-    .bg-row:nth-child(4){ top:85%; }
+    .bg-row:nth-child(4){ top:84%; }
+
+    /* 在每一排跑馬燈後面加一條深色半透明帶，讓字浮出來 */
+    .bg-row::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(
+        to right,
+        rgba(15,23,42,.75),
+        rgba(15,23,42,.55),
+        rgba(15,23,42,.75)
+      );
+      z-index:-1;
+    }
 
     .bg-marquee{
       display:inline-block;
@@ -70,20 +83,22 @@
       align-items:baseline;
       margin:0 3rem;
       font-size:1.5rem;
-      color:#fde68a;
-      text-shadow:0 0 12px rgba(0,0,0,.45);
+      color:#fde68a; /* 明亮金黃 */
+      text-shadow:0 0 8px rgba(0,0,0,.6);
     }
     .bg-item .name{
-      color:#f9fafb;
+      color:#ffffff;
       font-size:1rem;
       margin-left:.75rem;
       white-space:nowrap;
+      text-shadow:0 0 6px rgba(0,0,0,.6);
     }
     .bg-item .details{
       color:#e5e7eb;
       font-size:.85rem;
       margin-left:.5rem;
       white-space:nowrap;
+      text-shadow:0 0 6px rgba(0,0,0,.6);
     }
 
     /* ===== 前景簽到卡片 ===== */
@@ -95,11 +110,10 @@
       padding:0 24px;
     }
     .card{
-      background:rgba(255,255,255,.96); /* 比較實心，閱讀清楚 */
-      /* 不再用大範圍的玻璃霧化，避免整個畫面霧掉 */
+      background:rgba(255,255,255,.97);
       border-radius:20px;
       box-shadow:
-        0 20px 40px rgba(15,23,42,.18),
+        0 20px 40px rgba(15,23,42,.2),
         0 0 0 1px rgba(148,163,184,.25);
       padding:26px 24px 22px;
     }
