@@ -27,11 +27,13 @@
       <h1>國際雙語教育課程領導人工作坊</h1>
       <p class="sub">線上簽到（請填寫：單位／職稱／姓名）</p>
 
-      <!-- 純 HTML 表單，直接 POST 到 Apps Script -->
+      <!-- 多加一個 hidden kind=signin -->
       <form
         method="POST"
-        action="https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec"
+        action="https://script.google.com/macros/s/AKfycbx3Ctad6gLBPtq37VhO9kIC80SwTKVlYymODj0DJWI9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec"
       >
+        <input type="hidden" name="kind" value="signin" />
+
         <label for="unit">單位（例：大園國小）</label>
         <input id="unit" name="unit" required maxlength="40" placeholder="請輸入單位" />
 
@@ -50,7 +52,10 @@
         <p class="note">送出後會自動記錄簽到時間與IP（僅作為一次簽到之用）。</p>
       </form>
 
-      <div class="footer">© 桃園市國際雙語教育課程領導人工作坊</div>
+      <div class="footer">
+        © 桃園市國際雙語教育課程領導人工作坊
+        ｜ <a href="blessing.html" target="_blank">迎賓暨祝福牆</a>
+      </div>
     </div>
   </div>
 </body>
