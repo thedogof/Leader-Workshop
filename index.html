@@ -23,16 +23,22 @@
     h1{font-size:1.25rem;margin:0 0 4px}
     .sub{color:var(--muted);font-size:.95rem;margin:0 0 18px}
     label{display:block;font-weight:600;margin:.75rem 0 .4rem}
-    input{
+    input, textarea{
       width:100%;
       padding:12px 14px;
       border:1px solid #e2e8f0;
       border-radius:12px;
       font-size:1rem
     }
-    input:focus{
+    input:focus, textarea:focus{
       outline:2px solid rgba(37,99,235,.25);
       border-color:var(--accent)
+    }
+    textarea{
+      resize:vertical;
+      min-height:70px;
+      max-height:160px;
+      background:#f9fafb;
     }
     .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     button{
@@ -48,7 +54,6 @@
     .btn-full{width:100%;margin-top:18px}
     .note{font-size:.9rem;color:var(--muted);margin-top:10px}
     .footer{margin-top:22px;color:var(--muted);font-size:.85rem;text-align:center}
-
     .bless-box{
       margin-top:24px;
       padding-top:18px;
@@ -60,22 +65,6 @@
       align-items:center;
       gap:8px;
       flex-wrap:wrap;
-    }
-    textarea{
-      width:100%;
-      padding:10px 12px;
-      border:1px solid #e2e8f0;
-      border-radius:12px;
-      font-size:.95rem;
-      resize:vertical;
-      min-height:70px;
-      max-height:160px;
-      background:#f9fafb;
-    }
-    textarea:focus{
-      outline:2px solid rgba(37,99,235,.25);
-      border-color:var(--accent);
-      background:#fff;
     }
     .bless-hint{
       font-size:.8rem;
@@ -98,22 +87,19 @@
     .count{
       font-variant-numeric:tabular-nums;
     }
+    a.link{color:var(--accent);text-decoration:none}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
       <h1>國際雙語教育課程領導人工作坊</h1>
-      <p class="sub">線上簽到（請填寫：單位／職稱／姓名）</p>
+      <p class="sub">線上簽到（請填寫：單位／職稱／姓名，可加上一句迎賓祝福小語）</p>
 
-      <!-- 用隱藏 iframe 避免跳頁 -->
-      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
+      <!-- 送出後會跳到 Apps Script 回應頁 -->
       <form
-        id="signinForm"
         method="POST"
-        target="hidden_iframe"
-        action="https://script.google.com/macros/s/AKfycbx3Ctad6gLBPtq37VhO9kIC80SwTKVlYymODj0DJWI9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec"
+        action="https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec"
       >
         <label for="unit">單位（例：大園國小）</label>
         <input id="unit" name="unit" required maxlength="40" placeholder="請輸入單位" />
@@ -129,10 +115,10 @@
           </div>
         </div>
 
-        <!-- 這個 blessing 會送到 Apps Script，但不會寫入試算表，只進 Cache -->
+        <!-- 祝福小語：會寫進試算表「祝福牆」＆出現在 blessing.html -->
         <div class="bless-box">
           <div class="bless-header">
-            <label for="blessing">迎賓祝福小語（非必填，將顯示在祝福牆）</label>
+            <label for="blessing">迎賓祝福小語（非必填）</label>
             <button type="button" id="blessRandomBtn"
                     style="background:#e5e7eb;color:#374151;font-size:.85rem;padding:6px 10px;border-radius:999px;">
               沒靈感？幫我想一句
@@ -141,18 +127,18 @@
           <textarea id="blessing" name="blessing" maxlength="50"
                     placeholder="例：祝工作坊圓滿順利，讓孩子的世界因雙語而更寬廣。"></textarea>
           <div class="bless-hint">
-            <span>最多 50 字，將即時出現在大螢幕祝福牆上。</span>
+            <span>最多 50 字，將同步出現在大螢幕祝福牆上。</span>
             <span class="count" id="blessCount">0 / 50</span>
           </div>
         </div>
 
-        <button type="submit" class="btn-full">送出簽到與祝福</button>
-        <p class="note">送出後系統會自動記錄簽到時間與 IP，祝福訊息則僅暫時用於祝福牆展示，不會納入正式紀錄。</p>
+        <button type="submit" class="btn-full">送出簽到</button>
+        <p class="note">送出後系統會記錄簽到時間與 IP，祝福內容則僅用於祝福牆展示。</p>
       </form>
 
       <div class="footer">
         © 桃園市國際雙語教育課程領導人工作坊
-        ｜ 建議現場大螢幕開啟 <code>blessing.html</code> 祝福牆
+        ｜ <a class="link" href="blessing.html" target="_blank">開啟迎賓祝福牆</a>
       </div>
     </div>
   </div>
@@ -161,8 +147,6 @@
     const blessInput = document.getElementById('blessing');
     const blessBtn   = document.getElementById('blessRandomBtn');
     const blessCount = document.getElementById('blessCount');
-    const form       = document.getElementById('signinForm');
-    const iframe     = document.getElementById('hidden_iframe');
 
     const presets = [
       "祝工作坊圓滿順利、收穫滿滿！",
@@ -181,19 +165,6 @@
     blessBtn.addEventListener('click', () => {
       const t = presets[Math.floor(Math.random()*presets.length)];
       blessInput.value = t;
-      updateCount();
-    });
-
-    let submitting = false;
-    form.addEventListener('submit', () => {
-      submitting = true;
-    });
-
-    iframe.addEventListener('load', () => {
-      if (!submitting) return;
-      submitting = false;
-      alert('簽到已送出，感謝您的參與！\n如有螢幕祝福牆，您的祝福將稍後出現在大螢幕上。');
-      form.reset();
       updateCount();
     });
   </script>
