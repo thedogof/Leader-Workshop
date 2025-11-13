@@ -53,18 +53,7 @@
     .bg-row:nth-child(4){ top:84%; }
 
     /* 在每一排跑馬燈後面加一條深色半透明帶，讓字浮出來 */
-    .bg-row::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(
-        to right,
-        rgba(15,23,42,.75),
-        rgba(15,23,42,.55),
-        rgba(15,23,42,.75)
-      );
-      z-index:-1;
-    }
+    
 
     .bg-marquee{
       display:inline-block;
@@ -78,13 +67,35 @@
       0%{transform:translateX(0)}
       100%{transform:translateX(-100%)}
     }
-    .bg-item{
+       .bg-item{
       display:inline-flex;
       align-items:baseline;
       margin:0 3rem;
-      font-size:1.5rem;
-      color:#fde68a; /* 明亮金黃 */
-      text-shadow:0 0 8px rgba(0,0,0,.6);
+      font-size:1.3rem;
+      color:#fde68a;
+      text-shadow:0 0 6px rgba(0,0,0,.6);
+
+      /* 新增：自己有一個圓角深色底，不用整條色帶 */
+      padding:6px 18px;
+      border-radius:999px;
+      background:rgba(15,23,42,.78);
+      box-shadow:0 0 18px rgba(15,23,42,.75);
+    }
+    .bg-item .name{
+      color:#ffffff;
+      font-size:0.95rem;
+      margin-left:.75rem;
+      white-space:nowrap;
+      text-shadow:0 0 6px rgba(0,0,0,.6);
+    }
+    .bg-item .details{
+      color:#e5e7eb;
+      font-size:.8rem;
+      margin-left:.5rem;
+      white-space:nowrap;
+      text-shadow:0 0 6px rgba(0,0,0,.6);
+    }
+
     }
     .bg-item .name{
       color:#ffffff;
