@@ -17,10 +17,6 @@
     input:focus{outline:2px solid rgba(37,99,235,.25);border-color:var(--accent)}
     .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     button{width:100%;margin-top:18px;padding:12px 16px;border:0;border-radius:12px;background:var(--accent);color:#fff;font-weight:700;font-size:1rem;cursor:pointer}
-    button[disabled]{opacity:.6;cursor:not-allowed}
-    .note{font-size:.9rem;color:var(--muted);margin-top:10px}
-    .success{display:none;margin-top:14px;padding:12px;border-radius:10px;background:#e6fffa;color:#065f46;border:1px solid #99f6e4}
-    .error{display:none;margin-top:14px;padding:12px;border-radius:10px;background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
     .footer{margin-top:22px;color:var(--muted);font-size:.85rem;text-align:center}
   </style>
 </head>
@@ -30,7 +26,11 @@
       <h1>國際雙語教育課程領導人工作坊</h1>
       <p class="sub">線上簽到（請填寫：單位／職稱／姓名）</p>
 
-      <form id="form" autocomplete="on">
+      <!-- 這裡重點：直接用 HTML 表單 POST 到 Apps Script -->
+      <form
+        method="POST"
+        action="https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec"
+      >
         <label for="unit">單位（例：大園國小）</label>
         <input id="unit" name="unit" required maxlength="40" placeholder="請輸入單位" />
 
@@ -45,67 +45,12 @@
           </div>
         </div>
 
-        <button id="submitBtn" type="submit">送出簽到</button>
-        <div class="note">送出後會自動記錄時間與IP（僅作為一次簽到之用）。</div>
-        <div id="ok" class="success">簽到成功！感謝您的參與，祝活動順利。</div>
-        <div id="ng" class="error">送出失敗，請稍後再試或洽工作人員。</div>
+        <button type="submit">送出簽到</button>
+        <p class="note">送出後系統會自動記錄簽到時間。</p>
       </form>
 
       <div class="footer">© 桃園市國際雙語教育課程領導人工作坊</div>
     </div>
   </div>
-
-  <script>
-    const ENDPOINT = "https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec";
-
-    const form = document.getElementById('form');
-    const ok = document.getElementById('ok');
-    const ng = document.getElementById('ng');
-    const btn = document.getElementById('submitBtn');
-
-    function sanitize(s){ return (s||'').toString().trim().replace(/[\\n\\r\\t]+/g,' '); }
-
-    form.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      ok.style.display = 'none';
-      ng.style.display = 'none';
-
-      const unit  = sanitize(form.unit.value);
-      const title = sanitize(form.title.value);
-      const name  = sanitize(form.name.value);
-
-      if(!unit || !title || !name){
-        ng.textContent = '請完整填寫三個欄位';
-        ng.style.display = 'block';
-        return;
-      }
-
-      const qs = new URLSearchParams({ unit, title, name }).toString();
-      const body = new URLSearchParams({ unit, title, name });
-
-      btn.disabled = true; btn.textContent = '送出中⋯';
-
-      try{
-        const res = await fetch(`${ENDPOINT}?${qs}`, {
-          method: 'POST',
-          body // 不設定 Content-Type，瀏覽器會自動使用 x-www-form-urlencoded
-        });
-        const data = await res.json();
-        if(data && data.ok){
-          ok.style.display = 'block';
-          form.reset();
-          try{ localStorage.setItem('signedAt', String(Date.now())); }catch(err){}
-        }else{
-          ng.textContent = (data && data.message) ? data.message : '送出失敗，請稍後再試';
-          ng.style.display = 'block';
-        }
-      }catch(err){
-        ng.textContent = '無法連線至簽到系統，請稍後再試';
-        ng.style.display = 'block';
-      }finally{
-        btn.disabled = false; btn.textContent = '送出簽到';
-      }
-    });
-  </script>
 </body>
 </html>
