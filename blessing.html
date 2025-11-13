@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國際雙語教育課程領導人工作坊｜迎賓暨祝福牆</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, "Noto Sans TC", sans-serif;
+      background: linear-gradient(to bottom, #f0f2f5, #ffffff);
+      color: #374151;
+      overflow: hidden;
+      position: relative;
+    }
+    .nav-btn { background-color:#e5e7eb;color:#4b5563;transition:.3s }
+    .nav-btn.active, .nav-btn:hover { background-color:#005a9e;color:#fff }
+    .submit-btn{
+      background:linear-gradient(145deg,#facc15,#eab308);
+      color:#422006;transition:.3s;box-shadow:0 4px 6px rgba(0,0,0,.1)
+    }
+    .submit-btn:hover{transform:translateY(-2px);box-shadow:0 6px 12px rgba(0,0,0,.15)}
+    .marquee-container{
+      width:100%;overflow:hidden;white-space:nowrap;
+      box-sizing:border-box;display:flex;align-items:center;height:25%;
+    }
+    .marquee-content{
+      display:inline-block;padding-left:100%;animation:marquee 60s linear infinite;
+    }
+    .marquee-container:hover .marquee-content{animation-play-state:paused}
+    .blessing-item{
+      display:inline-flex;align-items:baseline;margin:0 2rem;
+      font-size:1.4rem;color:#f59e0b;
+    }
+    .blessing-item .name{color:#4b5563;font-size:1.05rem;margin-left:.75rem;white-space:nowrap}
+    .blessing-item .details{color:#6b7280;font-size:.9rem;margin-left:.5rem;white-space:nowrap}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+    .lantern-container{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:-1}
+    .lantern{
+      position:absolute;bottom:-150px;background:#facc15;border-radius:45% 45% 10% 10%;
+      opacity:0;animation:float-up 20s infinite linear;
+      box-shadow:0 0 20px #facc15,0 0 30px #facc15;
+    }
+    .lantern::before{
+      content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);
+      width:20px;height:10px;background:#a16207;border-radius:0 0 5px 5px;
+    }
+    .lantern.small{width:30px;height:36px}
+    .lantern.medium{width:40px;height:48px}
+    .lantern.large{width:60px;height:72px}
+    @keyframes float-up{
+      0%{transform:translateY(0);opacity:0}
+      10%,90%{opacity:.7}
+      100%{transform:translateY(-120vh) rotate(10deg);opacity:0}
+    }
+  </style>
+</head>
+<body class="w-full h-screen flex flex-col p-4 md:p-6 lg:p-8">
+  <div class="lantern-container" id="lantern-container"></div>
+
+  <header class="flex-shrink-0 flex flex-col md:flex-row justify-between items-center mb-4 z-10">
+    <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[#005a9e] mb-4 md:mb-0 text-center md:text-left">
+      國際雙語教育課程領導人工作坊｜迎賓暨祝福牆
+    </h1>
+    <nav class="flex items-center space-x-2 md:space-x-4">
+      <div class="flex space-x-2 rounded-lg p-1 bg-gray-200/80 backdrop-blur-sm">
+        <button id="show-input-btn" class="nav-btn px-4 py-2 text-sm md:text-base font-semibold rounded-md">
+          填寫祝福
+        </button>
+        <button id="show-display-btn" class="nav-btn px-4 py-2 text-sm md:text-base font-semibold rounded-md">
+          祝福牆模式
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="flex-grow w-full h-full overflow-hidden z-10">
+    <!-- 輸入區 -->
+    <section id="input-section" class="hidden w-full h-full flex items-center justify-center">
+      <div class="w-full max-w-lg bg-white/80 backdrop-blur-sm border border-gray-200 p-8 rounded-2xl shadow-xl">
+        <h2 class="text-3xl font-bold text-center mb-6 text-[#005a9e]">來賓祝福留言</h2>
+        <form id="bless-form" class="space-y-6">
+          <input type="hidden" name="kind" value="blessing" />
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-600 mb-1">姓名</label>
+            <input type="text" id="name" name="name" required
+                   class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#005a9e]">
+          </div>
+          <div>
+            <label for="unit" class="block text-sm font-medium text-gray-600 mb-1">服務單位</label>
+            <input type="text" id="unit" name="unit" required
+                   class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#005a9e]">
+          </div>
+          <div>
+            <label for="title" class="block text-sm font-medium text-gray-600 mb-1">職稱</label>
+            <input type="text" id="title" name="title" required
+                   class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#005a9e]">
+          </div>
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label for="blessing" class="block text-sm font-medium text-gray-600">祝福內容（50字以內）</label>
+              <button type="button" id="random-bless-btn"
+                      class="text-sm text-[#005a9e] hover:text-[#f59e0b] font-semibold transition-colors duration-200">
+                沒靈感？幫我想一句
+              </button>
+            </div>
+            <textarea id="blessing" name="blessing" rows="3" maxlength="50" required
+                      class="w-full bg-gray-100 border border-gray-300 text-gray-900 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#005a9e]"></textarea>
+          </div>
+          <button type="submit" class="submit-btn w-full font-bold py-3 px-4 rounded-lg text-lg">
+            送出祝福
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 祝福牆展示 -->
+    <section id="display-section" class="w-full h-full">
+      <div class="w-full h-full bg-white/60 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-xl flex flex-col justify-around p-4 relative">
+        <div id="placeholder" class="absolute inset-0 flex items-center justify-center text-center text-gray-500">
+          <p class="text-2xl">螢幕目前尚無祝福訊息，歡迎來賓透過「填寫祝福」頁面留下祝福。</p>
+        </div>
+        <div class="marquee-container"><div class="marquee-content" id="marquee1"></div></div>
+        <div class="marquee-container"><div class="marquee-content" id="marquee2"></div></div>
+        <div class="marquee-container"><div class="marquee-content" id="marquee3"></div></div>
+        <div class="marquee-container"><div class="marquee-content" id="marquee4"></div></div>
+      </div>
+    </section>
+
+    <div id="toast"
+         class="fixed bottom-10 right-10 bg-green-500 text-white py-3 px-6 rounded-lg shadow-xl text-lg opacity-0 transform translate-y-5 transition-all duration-500">
+    </div>
+  </main>
+
+  <script>
+    const ENDPOINT = "https://script.google.com/macros/s/AKfycbx3Ctad6gLBPtq37VhO9kIC80SwTKVlYymODj0DJWI9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec";
+
+    const inputSection = document.getElementById('input-section');
+    const displaySection = document.getElementById('display-section');
+    const showInputBtn = document.getElementById('show-input-btn');
+    const showDisplayBtn = document.getElementById('show-display-btn');
+    const form = document.getElementById('bless-form');
+    const toast = document.getElementById('toast');
+    const placeholder = document.getElementById('placeholder');
+
+    const marqueeEls = [
+      document.getElementById('marquee1'),
+      document.getElementById('marquee2'),
+      document.getElementById('marquee3'),
+      document.getElementById('marquee4')
+    ];
+
+    function setMode(mode) {
+      if (mode === 'input') {
+        inputSection.classList.remove('hidden');
+        displaySection.classList.add('hidden');
+        showInputBtn.classList.add('active');
+        showDisplayBtn.classList.remove('active');
+      } else {
+        inputSection.classList.add('hidden');
+        displaySection.classList.remove('hidden');
+        showInputBtn.classList.remove('active');
+        showDisplayBtn.classList.add('active');
+      }
+    }
+
+    showInputBtn.addEventListener('click', () => setMode('input'));
+    showDisplayBtn.addEventListener('click', () => setMode('display'));
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.remove('opacity-0','translate-y-5');
+      toast.classList.add('opacity-100','translate-y-0');
+      setTimeout(() => {
+        toast.classList.add('opacity-0','translate-y-5');
+        toast.classList.remove('opacity-100','translate-y-0');
+      }, 2000);
+    }
+
+    // 隨機祝福句
+    const presets = [
+      "祝福工作坊圓滿順利、收穫滿滿！",
+      "願桃園雙語教育持續發光發熱！",
+      "讓孩子的世界因雙語而更寬廣。",
+      "謝謝各位領導人為孩子多走一步。",
+      "祝大家今天都被好的靈感擊中。"
+    ];
+    document.getElementById('random-bless-btn').addEventListener('click', () => {
+      const t = presets[Math.floor(Math.random()*presets.length)];
+      document.getElementById('blessing').value = t;
+    });
+
+    // 送出祝福 → Apps Script
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      fd.set('kind','blessing');
+      try {
+        const res = await fetch(ENDPOINT, {
+          method:'POST',
+          body:new URLSearchParams(fd)
+        });
+        const data = await res.json();
+        if (data.ok) {
+          form.reset();
+          showToast('祝福已送出！');
+        } else {
+          showToast(data.message || '送出失敗，稍後再試');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('無法連線到祝福系統');
+      }
+    });
+
+    // 讀取祝福列表
+    async function loadBlessings() {
+      try {
+        const res = await fetch(ENDPOINT + '?mode=listBlessings');
+        const data = await res.json();
+        const items = (data && data.items) ? data.items : [];
+
+        placeholder.style.display = items.length === 0 ? 'flex' : 'none';
+        marqueeEls.forEach(el => el.innerHTML = '');
+
+        if (items.length === 0) return;
+
+        const cols = [[],[],[],[]];
+        items.forEach((b,i) => cols[i % 4].push(b));
+
+        cols.forEach((col, idx) => {
+          const el = marqueeEls[idx];
+          col.forEach(b => {
+            const span = document.createElement('span');
+            span.className = 'blessing-item';
+            span.innerHTML =
+              `「${(b.blessing || '').replace(/</g,'&lt;').replace(/>/g,'&gt;')}」` +
+              `<span class="name">${b.name || ''}</span>` +
+              `<span class="details">${b.unit || ''}／${b.title || ''}</span>`;
+            el.appendChild(span);
+          });
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    setInterval(loadBlessings, 5000);
+    loadBlessings();
+
+    // 飛天燈動畫
+    const lanternContainer = document.getElementById('lantern-container');
+    function spawnLantern(){
+      const d = document.createElement('div');
+      d.classList.add('lantern');
+      ['small','medium','large'][Math.floor(Math.random()*3)] && d.classList.add(['small','medium','large'][Math.floor(Math.random()*3)]);
+      d.style.left = Math.random()*100 + '%';
+      d.style.animationDuration = (15+Math.random()*8)+'s';
+      lanternContainer.appendChild(d);
+      setTimeout(()=>d.remove(),23000);
+    }
+    setInterval(spawnLantern,2000);
+
+    // 預設：祝福牆模式
+    setMode('display');
+  </script>
+</body>
+</html>
