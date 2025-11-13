@@ -13,14 +13,14 @@
       background:var(--bg);
       color:var(--ink)
     }
-    .wrap{max-width:560px;margin:4rem auto;padding:24px}
+    .wrap{max-width:760px;margin:4rem auto;padding:24px}
     .card{
       background:var(--card);
       border-radius:16px;
       box-shadow:0 10px 30px rgba(0,0,0,.06);
       padding:28px
     }
-    h1{font-size:1.25rem;margin:0 0 4px}
+    h1{font-size:1.4rem;margin:0 0 4px}
     .sub{color:var(--muted);font-size:.95rem;margin:0 0 18px}
     label{display:block;font-weight:600;margin:.75rem 0 .4rem}
     input, textarea{
@@ -88,6 +88,74 @@
       font-variant-numeric:tabular-nums;
     }
     a.link{color:var(--accent);text-decoration:none}
+
+    /* 簽到頁內的小型祝福牆 */
+    .mini-wall{
+      margin-top:24px;
+      border-radius:14px;
+      background:rgba(255,255,255,.8);
+      border:1px solid #e5e7eb;
+      box-shadow:0 6px 16px rgba(0,0,0,.04);
+      padding:10px 14px;
+    }
+    .mini-wall-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:.85rem;
+      color:#6b7280;
+      margin-bottom:4px;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .mini-wall-header strong{
+      color:#0f172a;
+      font-size:.9rem;
+    }
+    .mini-marquee-container{
+      width:100%;
+      overflow:hidden;
+      white-space:nowrap;
+      box-sizing:border-box;
+      display:flex;
+      align-items:center;
+      min-height:2.2rem;
+    }
+    .mini-marquee-content{
+      display:inline-block;
+      padding-left:100%;
+      animation:mini-marquee 50s linear infinite;
+    }
+    .mini-marquee-container:hover .mini-marquee-content{
+      animation-play-state:paused;
+    }
+    .mini-blessing-item{
+      display:inline-flex;
+      align-items:baseline;
+      margin:0 1.8rem;
+      font-size:1rem;
+      color:#f59e0b;
+    }
+    .mini-blessing-item .name{
+      color:#111827;
+      font-size:.9rem;
+      margin-left:.5rem;
+      white-space:nowrap;
+    }
+    .mini-blessing-item .details{
+      color:#6b7280;
+      font-size:.75rem;
+      margin-left:.4rem;
+      white-space:nowrap;
+    }
+    #miniPlaceholder{
+      font-size:.8rem;
+      color:#9ca3af;
+    }
+    @keyframes mini-marquee{
+      0%{transform:translateX(0)}
+      100%{transform:translateX(-100%)}
+    }
   </style>
 </head>
 <body>
@@ -115,7 +183,7 @@
           </div>
         </div>
 
-        <!-- 祝福小語：會寫進試算表「祝福牆」＆出現在 blessing.html -->
+        <!-- 迎賓祝福小語：寫進試算表「祝福牆」，也會在 blessing.html 跑馬燈顯示 -->
         <div class="bless-box">
           <div class="bless-header">
             <label for="blessing">迎賓祝福小語（非必填）</label>
@@ -136,14 +204,26 @@
         <p class="note">送出後系統會記錄簽到時間與 IP，祝福內容則僅用於祝福牆展示。</p>
       </form>
 
+      <!-- 👇 這一塊是簽到頁裡的小型祝福牆預覽 -->
+      <div class="mini-wall">
+        <div class="mini-wall-header">
+          <div><strong>即時祝福牆預覽</strong>（同大螢幕內容）</div>
+          <div id="miniPlaceholder">目前尚無祝福，邀請您成為第一個留言的人 ✨</div>
+        </div>
+        <div class="mini-marquee-container">
+          <div class="mini-marquee-content" id="miniMarquee"></div>
+        </div>
+      </div>
+
       <div class="footer">
         © 桃園市國際雙語教育課程領導人工作坊
-        ｜ <a class="link" href="blessing.html" target="_blank">開啟迎賓祝福牆</a>
+        ｜ <a class="link" href="blessing.html" target="_blank">開啟全螢幕迎賓祝福牆</a>
       </div>
     </div>
   </div>
 
   <script>
+    // ===== 祝福輸入：隨機小語 + 字數計數 =====
     const blessInput = document.getElementById('blessing');
     const blessBtn   = document.getElementById('blessRandomBtn');
     const blessCount = document.getElementById('blessCount');
@@ -167,6 +247,68 @@
       blessInput.value = t;
       updateCount();
     });
+
+    // ===== 小型祝福牆：跟 blessing.html 同一個後端 =====
+    const ENDPOINT = "https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec";
+
+    const miniMarquee    = document.getElementById('miniMarquee');
+    const miniPlaceholder = document.getElementById('miniPlaceholder');
+
+    function escapeHtml(str){
+      return (str || '').replace(/[&<>"]/g, c => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'
+      }[c] || c));
+    }
+
+    function renderMiniBlessings(items){
+      if (!items || items.length === 0){
+        miniPlaceholder.style.display = 'block';
+        miniMarquee.innerHTML = '';
+        return;
+      }
+      miniPlaceholder.style.display = 'none';
+      miniMarquee.innerHTML = '';
+
+      // 直接全部接在一行
+      items.forEach(b => {
+        const span = document.createElement('span');
+        span.className = 'mini-blessing-item';
+        span.innerHTML =
+          '「' + escapeHtml(b.blessing) + '」' +
+          '<span class="name">' + escapeHtml(b.name) + '</span>' +
+          '<span class="details">' +
+            escapeHtml(b.unit) + '／' + escapeHtml(b.title) +
+          '</span>';
+        miniMarquee.appendChild(span);
+      });
+    }
+
+    function loadMiniBlessings(){
+      const cbName = 'miniBless_cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
+      const script = document.createElement('script');
+      script.src = ENDPOINT + '?mode=listBlessings&callback=' + cbName;
+
+      window[cbName] = function(data){
+        try{
+          if (data && data.ok) {
+            renderMiniBlessings(data.items || []);
+          }
+        }finally{
+          delete window[cbName];
+          script.remove();
+        }
+      };
+
+      script.onerror = function(){
+        delete window[cbName];
+        script.remove();
+      };
+
+      document.body.appendChild(script);
+    }
+
+    loadMiniBlessings();
+    setInterval(loadMiniBlessings, 5000);
   </script>
 </body>
 </html>
