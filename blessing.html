@@ -13,8 +13,10 @@
       padding:16px 24px;
       box-sizing:border-box;
       font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;
-      background:linear-gradient(to bottom,#f0f2f5,#ffffff);
-      color:#374151;
+      background:linear-gradient(to bottom,#0f172a,#020617);
+      color:#e5e7eb;
+      position:relative;    /* 給天燈用 */
+      overflow:hidden;      /* 不讓天燈超出畫面 */
     }
     header{
       flex:0 0 auto;
@@ -22,24 +24,29 @@
       justify-content:center;
       align-items:center;
       padding-bottom:8px;
+      z-index:2;
+      position:relative;
     }
     h1{
       font-size:2rem;
       font-weight:700;
-      color:#005a9e;
+      color:#38bdf8;
       text-align:center;
+      text-shadow:0 0 12px rgba(56,189,248,.6);
     }
     main{
       flex:1 1 auto;
       border-radius:20px;
-      background:rgba(255,255,255,.7);
-      box-shadow:0 10px 30px rgba(0,0,0,.08);
+      background:rgba(15,23,42,.78);
+      box-shadow:0 10px 30px rgba(0,0,0,.6);
       padding:16px;
       display:flex;
       flex-direction:column;
       justify-content:space-around;
       position:relative;
       overflow:hidden;
+      z-index:1;
+      border:1px solid rgba(148,163,184,.4);
     }
     .marquee-container{
       width:100%;
@@ -61,19 +68,22 @@
       align-items:baseline;
       margin:0 2.5rem;
       font-size:1.6rem;
-      color:#f59e0b;
+      color:#fde68a;
+      text-shadow:0 0 10px rgba(0,0,0,.9);
     }
     .name{
-      color:#111827;
+      color:#e5e7eb;
       font-size:1.1rem;
       margin-left:.75rem;
       white-space:nowrap;
+      text-shadow:0 0 8px rgba(0,0,0,.9);
     }
     .details{
-      color:#6b7280;
+      color:#9ca3af;
       font-size:.9rem;
       margin-left:.5rem;
       white-space:nowrap;
+      text-shadow:0 0 6px rgba(0,0,0,.9);
     }
     #placeholder{
       position:absolute;
@@ -86,17 +96,61 @@
       text-align:center;
       padding:0 40px;
       pointer-events:none;
+      z-index:0;
     }
     @keyframes marquee{
       0%{transform:translateX(0)}
       100%{transform:translateX(-100%)}
     }
+
+    /* === 天燈背景 === */
+    .lantern-container{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+      z-index:0;          /* 在最底層，祝福文字在上面 */
+      pointer-events:none;
+    }
+    .lantern{
+      position:absolute;
+      bottom:-140px;
+      background:#facc15;
+      border-radius:45% 45% 18% 18%;
+      opacity:0;
+      box-shadow:0 0 22px rgba(250,204,21,.95),0 0 40px rgba(250,204,21,.8);
+      animation:float-up 22s linear infinite;
+    }
+    .lantern::before{
+      content:"";
+      position:absolute;
+      bottom:-10px;
+      left:50%;
+      transform:translateX(-50%);
+      width:20px;
+      height:10px;
+      background:#a16207;
+      border-radius:0 0 6px 6px;
+    }
+    .lantern.small{width:26px;height:34px;}
+    .lantern.medium{width:36px;height:46px;}
+    .lantern.large{width:52px;height:64px;}
+
+    @keyframes float-up{
+      0%{transform:translateY(0);opacity:0;}
+      10%{opacity:.85;}
+      90%{opacity:.8;}
+      100%{transform:translateY(-120vh) translateX(10px);opacity:0;}
+    }
   </style>
 </head>
 <body>
+  <!-- 天燈背景 -->
+  <div class="lantern-container" id="lantern-container"></div>
+
   <header>
     <h1>國際雙語教育課程領導人工作坊｜迎賓祝福牆</h1>
   </header>
+
   <main>
     <div id="placeholder">
       目前尚無祝福訊息，請貴賓於簽到頁面留下「迎賓祝福小語」，畫面將自動更新。
@@ -181,6 +235,26 @@
 
     loadBlessings();
     setInterval(loadBlessings, 5000);
+
+    // === 天燈生成 ===
+    const lanternContainer = document.getElementById('lantern-container');
+
+    function createLantern(){
+      if(!lanternContainer) return;
+      const lantern = document.createElement('div');
+      const sizes = ['small','medium','large'];
+      lantern.className = 'lantern ' + sizes[Math.floor(Math.random()*sizes.length)];
+      lantern.style.left = (Math.random()*100) + '%';
+      lantern.style.animationDuration = (18 + Math.random()*8) + 's';
+      lanternContainer.appendChild(lantern);
+      setTimeout(() => lantern.remove(), 28000);
+    }
+
+    // 先生成幾顆，再固定間隔產生
+    for(let i=0;i<6;i++){
+      setTimeout(createLantern, i*800);
+    }
+    setInterval(createLantern, 1200);
   </script>
 </body>
 </html>
