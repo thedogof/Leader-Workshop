@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國際雙語教育課程領導人工作坊｜迎賓祝福牆・漂浮版</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      margin:0;
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      padding:16px 24px;
+      font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;
+      background:linear-gradient(to bottom,#0f172a,#020617);
+      color:#e5e7eb;
+      position:relative;
+      overflow:hidden;
+    }
+    header{
+      flex:0 0 auto;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding-bottom:8px;
+      position:relative;
+      z-index:2;
+    }
+    h1{
+      font-size:2rem;
+      font-weight:700;
+      color:#38bdf8;
+      text-align:center;
+      text-shadow:0 0 12px rgba(56,189,248,.6);
+    }
+    main{
+      flex:1 1 auto;
+      border-radius:20px;
+      background:rgba(15,23,42,.82);
+      box-shadow:0 10px 30px rgba(0,0,0,.6);
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(148,163,184,.4);
+    }
+
+    /* 祝福浮動層 */
+    .blessing-layer{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+      z-index:2;
+      pointer-events:none;
+    }
+
+    #placeholder{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#9ca3af;
+      font-size:1.4rem;
+      text-align:center;
+      padding:0 40px;
+      pointer-events:none;
+      z-index:1;
+    }
+
+    .floating-blessing{
+      position:absolute;
+      max-width:40vw;
+      min-width:220px;
+      padding:10px 14px;
+      border-radius:16px;
+      background:rgba(15,23,42,.9);
+      border:1px solid rgba(250,250,250,.08);
+      box-shadow:0 12px 30px rgba(0,0,0,.7);
+      color:#fef3c7;
+      font-size:1.1rem;
+      line-height:1.5;
+      text-shadow:0 0 10px rgba(0,0,0,.9);
+      opacity:0;
+      transform:translate(-50%,0);
+      animation:float-soft 18s ease-in-out forwards;
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+    }
+
+    .floating-blessing .quote{
+      display:block;
+      margin-bottom:4px;
+    }
+    .floating-blessing .quote::before{
+      content:"「";
+    }
+    .floating-blessing .quote::after{
+      content:"」";
+    }
+    .floating-blessing .meta{
+      margin-top:2px;
+      font-size:.9rem;
+      color:#e5e7eb;
+      opacity:.92;
+    }
+    .floating-blessing .meta span+span::before{
+      content:"／";
+      margin:0 .25rem;
+      color:#9ca3af;
+    }
+
+    @keyframes float-soft{
+      0%{
+        opacity:0;
+        transform:translate(-50%,10px) scale(.96);
+      }
+      10%{
+        opacity:1;
+        transform:translate(-50%,0) scale(1);
+      }
+      80%{
+        opacity:1;
+        transform:translate(-50%,-8px) scale(1.02);
+      }
+      100%{
+        opacity:0;
+        transform:translate(-50%,-24px) scale(1.03);
+      }
+    }
+
+    /* === 天燈背景（沿用原版） === */
+    .lantern-container{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+      z-index:0;
+      pointer-events:none;
+    }
+    .lantern{
+      position:absolute;
+      bottom:-140px;
+      background:#facc15;
+      border-radius:45% 45% 18% 18%;
+      opacity:0;
+      box-shadow:0 0 22px rgba(250,204,21,.95),0 0 40px rgba(250,204,21,.8);
+      animation:float-up 22s linear infinite;
+    }
+    .lantern::before{
+      content:"";
+      position:absolute;
+      bottom:-10px;
+      left:50%;
+      transform:translateX(-50%);
+      width:20px;
+      height:10px;
+      background:#a16207;
+      border-radius:0 0 6px 6px;
+    }
+    .lantern.small{width:26px;height:34px;}
+    .lantern.medium{width:36px;height:46px;}
+    .lantern.large{width:52px;height:64px;}
+
+    @keyframes float-up{
+      0%{transform:translateY(0);opacity:0;}
+      10%{opacity:.85;}
+      90%{opacity:.8;}
+      100%{transform:translateY(-120vh) translateX(10px);opacity:0;}
+    }
+
+    @media (max-width:768px){
+      .floating-blessing{
+        max-width:70vw;
+        font-size:1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 天燈背景 -->
+  <div class="lantern-container" id="lantern-container"></div>
+
+  <header>
+    <h1>國際雙語教育課程領導人工作坊｜迎賓祝福牆</h1>
+  </header>
+
+  <main>
+    <div id="placeholder">
+      目前尚無祝福訊息，請貴賓於簽到頁面留下「迎賓祝福小語」，畫面將自動更新。
+    </div>
+    <div class="blessing-layer" id="blessing-layer"></div>
+  </main>
+
+  <script>
+    // 與原版共用同一個 Web App
+    const ENDPOINT = "https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec";
+
+    const layer = document.getElementById('blessing-layer');
+    const placeholder = document.getElementById('placeholder');
+
+    let blessingsData = [];
+    let blessingIndex = 0;
+    const MAX_VISIBLE = 10;   // 畫面同時最多幾則浮動祝福
+
+    function escapeHtml(str){
+      return (str || '').replace(/[&<>"]/g, c => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'
+      }[c] || c));
+    }
+
+    function setPlaceholderVisible(show){
+      placeholder.style.display = show ? 'flex' : 'none';
+    }
+
+    function spawnBlessing(){
+      if (!blessingsData.length) return;
+
+      // 控制畫面上最多幾個
+      const existing = layer.querySelectorAll('.floating-blessing');
+      if (existing.length >= MAX_VISIBLE) return;
+
+      const b = blessingsData[blessingIndex % blessingsData.length];
+      blessingIndex++;
+
+      const div = document.createElement('div');
+      div.className = 'floating-blessing';
+
+      // 隨機位置（避免太邊邊）
+      const left = 15 + Math.random() * 70;   // 15% ~ 85%
+      const top  = 18 + Math.random() * 60;   // 18% ~ 78%
+
+      div.style.left = left + '%';
+      div.style.top  = top + '%';
+
+      // 每則略微不同節奏
+      const duration = 14 + Math.random() * 8; // 14~22 秒
+      div.style.animationDuration = duration + 's';
+
+      div.innerHTML =
+        '<span class="quote">' + escapeHtml(b.blessing) + '</span>' +
+        '<div class="meta">' +
+          '<span>' + escapeHtml(b.name || '') + '</span>' +
+          '<span>' + escapeHtml(b.unit || '') + '</span>' +
+          '<span>' + escapeHtml(b.title || '') + '</span>' +
+        '</div>';
+
+      layer.appendChild(div);
+
+      // 動畫結束後移除
+      setTimeout(() => {
+        div.remove();
+      }, (duration + 1) * 1000);
+    }
+
+    function renderBlessings(items){
+      blessingsData = items || [];
+      blessingIndex = 0;
+
+      // 清掉舊的浮動文字
+      layer.innerHTML = '';
+
+      if (!blessingsData.length){
+        setPlaceholderVisible(true);
+        return;
+      }
+      setPlaceholderVisible(false);
+
+      // 一開始先生成幾則
+      const initial = Math.min(6, blessingsData.length);
+      for(let i=0;i<initial;i++){
+        setTimeout(spawnBlessing, i * 800);
+      }
+    }
+
+    function loadBlessings(){
+      const cbName = 'bless_cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
+      const script = document.createElement('script');
+      script.src = ENDPOINT + '?mode=listBlessings&callback=' + cbName;
+
+      window[cbName] = function(data){
+        try{
+          if (data && data.ok) {
+            renderBlessings(data.items || []);
+          }
+        }finally{
+          delete window[cbName];
+          script.remove();
+        }
+      };
+
+      script.onerror = function(){
+        delete window[cbName];
+        script.remove();
+      };
+
+      document.body.appendChild(script);
+    }
+
+    // 定期產生新的浮動祝福
+    setInterval(spawnBlessing, 2500);
+
+    // 定期重新抓資料（例如每 10 秒）
+    loadBlessings();
+    setInterval(loadBlessings, 10000);
+
+    // === 天燈生成（沿用原版） ===
+    const lanternContainer = document.getElementById('lantern-container');
+
+    function createLantern(){
+      if(!lanternContainer) return;
+      const lantern = document.createElement('div');
+      const sizes = ['small','medium','large'];
+      lantern.className = 'lantern ' + sizes[Math.floor(Math.random()*sizes.length)];
+      lantern.style.left = (Math.random()*100) + '%';
+      lantern.style.animationDuration = (18 + Math.random()*8) + 's';
+      lanternContainer.appendChild(lantern);
+      setTimeout(() => lantern.remove(), 28000);
+    }
+
+    for(let i=0;i<6;i++){
+      setTimeout(createLantern, i*800);
+    }
+    setInterval(createLantern, 1200);
+  </script>
+</body>
+</html>
