@@ -362,13 +362,13 @@
   function initParticles(){
     if(!particleLayer) return;
 
-    const COUNT = 200; // 顆數：可以 150~240 之間微調
+    const COUNT = 500; // 顆數：可以 150~240 之間微調
 
     for(let i=0;i<COUNT;i++){
       const p = document.createElement('div');
       p.className = 'particle';
 
-      const size = 1.5 + Math.random()*1.5;  // 1.5~3px
+      const size = 5 + Math.random()*2;  // 1.5~3px
       p.style.width = size + 'px';
       p.style.height = size + 'px';
 
