@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國際雙語教育課程領導人工作坊｜迎賓祝福牆・白色高光版</title>
+  <title>國際雙語教育課程領導人工作坊｜迎賓祝福牆・暖白高光版</title>
   <style>
     *{
       box-sizing:border-box;
@@ -18,8 +18,8 @@
       padding:16px 24px;
       font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;
       background:
-        radial-gradient(circle at top, rgba(255,255,255,1) 0, rgba(249,250,251,1) 35%, rgba(243,244,246,1) 70%, rgba(229,231,235,1) 100%);
-      color:#111827;
+        radial-gradient(circle at top, #fefce8 0, #fef9c3 32%, #fef3c7 65%, #f5f5f4 100%);
+      color:#78350f; /* 暖棕，不用黑色 */
       position:relative;
       overflow:hidden;
     }
@@ -35,60 +35,86 @@
     h1{
       font-size:2rem;
       font-weight:700;
-      color:#111827;
+      color:#78350f;
       text-align:center;
-      letter-spacing:0.04em;
+      letter-spacing:0.05em;
       text-shadow:
-        0 0 12px rgba(255,255,255,.9),
-        0 4px 18px rgba(148,163,184,.6);
+        0 0 14px rgba(254,249,195,.9),
+        0 0 36px rgba(250,204,21,.55);
     }
     main{
       flex:1 1 auto;
       border-radius:24px;
       background:linear-gradient(
         to bottom right,
-        rgba(255,255,255,.88),
-        rgba(249,250,251,.96)
+        rgba(255,255,255,.96),
+        rgba(254,249,195,.92)
       );
       box-shadow:
-        0 18px 50px rgba(148,163,184,.45),
-        0 0 0 1px rgba(209,213,219,.6);
+        0 18px 55px rgba(250,204,21,.35),
+        0 0 0 1px rgba(253,230,138,.85);
       padding:16px;
       position:relative;
       overflow:hidden;
     }
 
-    /* 淡淡的光暈背景圓 */
+    /* === 暖黃色光暈背景（取代天燈） === */
     .halo{
       position:absolute;
       border-radius:999px;
-      filter:blur(24px);
-      opacity:.9;
+      filter:blur(40px);
+      opacity:.85;
       pointer-events:none;
       z-index:0;
       mix-blend-mode:screen;
+      animation-duration:22s;
+      animation-iteration-count:infinite;
+      animation-timing-function:ease-in-out;
     }
-    .halo.h1{
-      width:360px;
-      height:360px;
-      top:-140px;
+    .halo-main{
+      width:520px;
+      height:520px;
+      top:-160px;
       left:50%;
       transform:translateX(-50%);
-      background:radial-gradient(circle, rgba(255,255,255,1) 0, rgba(248,250,252,0) 70%);
+      background:radial-gradient(circle, #fef9c3 0, rgba(250,250,250,0) 70%);
+      animation-name:haloPulseMain;
     }
-    .halo.h2{
-      width:260px;
-      height:260px;
-      bottom:-120px;
-      left:-60px;
-      background:radial-gradient(circle, rgba(252,231,243,.9) 0, rgba(252,231,243,0) 70%);
+    .halo-left{
+      width:420px;
+      height:420px;
+      bottom:-180px;
+      left:-80px;
+      background:radial-gradient(circle, #fde68a 0, rgba(252,211,77,0) 70%);
+      animation-name:haloPulseLeft;
     }
-    .halo.h3{
-      width:280px;
-      height:280px;
-      bottom:-130px;
-      right:-40px;
-      background:radial-gradient(circle, rgba(219,234,254,.9) 0, rgba(219,234,254,0) 70%);
+    .halo-right{
+      width:420px;
+      height:420px;
+      bottom:-200px;
+      right:-90px;
+      background:radial-gradient(circle, #facc15 0, rgba(250,204,21,0) 70%);
+      animation-name:haloPulseRight;
+    }
+
+    @keyframes haloPulseMain {
+      0%   { opacity:.65; transform:translateX(-50%) scale(0.95); }
+      25%  { opacity:.95; transform:translateX(-50%) scale(1.05); }
+      50%  { opacity:.8;  transform:translateX(-50%) scale(1.02); }
+      75%  { opacity:.98; transform:translateX(-50%) scale(1.08); }
+      100% { opacity:.7;  transform:translateX(-50%) scale(0.96); }
+    }
+    @keyframes haloPulseLeft {
+      0%   { opacity:.5; transform:translateY(6px) scale(0.9); }
+      30%  { opacity:.9; transform:translateY(-4px) scale(1.05); }
+      60%  { opacity:.65; transform:translateY(0px) scale(1.0); }
+      100% { opacity:.5; transform:translateY(8px) scale(0.92); }
+    }
+    @keyframes haloPulseRight {
+      0%   { opacity:.55; transform:translateY(-4px) scale(0.92); }
+      35%  { opacity:.92; transform:translateY(4px) scale(1.06); }
+      70%  { opacity:.7;  transform:translateY(0px) scale(1.0); }
+      100% { opacity:.55; transform:translateY(-6px) scale(0.94); }
     }
 
     /* 祝福浮動層 */
@@ -106,15 +132,16 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      color:#6b7280;
+      color:#a16207;
       font-size:1.4rem;
       text-align:center;
       padding:0 40px;
       pointer-events:none;
       z-index:1;
+      text-shadow:0 0 10px rgba(254,240,138,.9);
     }
 
-    /* === 漂浮祝福卡片（High-Key 玻璃感） === */
+    /* === 漂浮祝福卡片（暖白玻璃＋金光邊緣） === */
     .floating-blessing{
       position:absolute;
       max-width:50vw;
@@ -122,32 +149,32 @@
       padding:14px 20px;
       border-radius:22px;
       background:linear-gradient(
-        135deg,
+        145deg,
         rgba(255,255,255,.98),
-        rgba(249,250,251,.92)
+        rgba(254,249,195,.96)
       );
-      border:1px solid rgba(229,231,235,.9);
+      border:1px solid rgba(253,224,171,.95);
       box-shadow:
-        0 0 40px rgba(255,255,255,.95),
-        0 0 80px rgba(250,250,250,.95),
-        0 14px 40px rgba(148,163,184,.55);
-      color:#374151;
+        0 0 40px rgba(253,224,171,.95),
+        0 0 85px rgba(250,250,250,.95),
+        0 18px 40px rgba(230,169,62,.55);
+      color:#92400e;
       font-size:1.4rem;
       line-height:1.6;
-      text-shadow:0 0 8px rgba(255,255,255,.9);
+      text-shadow:0 0 10px rgba(255,250,230,.95);
       opacity:0;
       transform:translate(-50%,0);
       animation:float-soft 28s ease-in-out forwards;
-      backdrop-filter:blur(16px);
-      -webkit-backdrop-filter:blur(16px);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
     }
 
     .floating-blessing .quote{
       display:block;
       margin-bottom:6px;
-      color:#111827;
-      font-weight:550;
-      letter-spacing:0.02em;
+      color:#7c2d12;
+      font-weight:600;
+      letter-spacing:0.03em;
     }
     .floating-blessing .quote::before{
       content:"「";
@@ -156,50 +183,50 @@
       content:"」";
     }
     .floating-blessing .meta{
-      margin-top:2px;
+      margin-top:4px;
       font-size:.95rem;
-      color:#6b7280;
+      color:#b45309;
       opacity:.96;
     }
     .floating-blessing .meta span+span::before{
       content:"／";
       margin:0 .25rem;
-      color:#d1d5db;
+      color:#fbbf24;
     }
 
-    /* 像光之卡片一樣的漂浮＋呼吸＋微閃爍 */
+    /* 像光之卡片一樣的漂浮＋呼吸＋微閃爍（往上多一點） */
     @keyframes float-soft {
       0% {
         opacity: 0;
-        transform: translate(-50%, 30px) scale(0.96);
+        transform: translate(-50%, 32px) scale(0.96);
       }
       10% {
         opacity: 0.96;
-        transform: translate(-50%, 8px) scale(1);
+        transform: translate(-50%, 10px) scale(1);
       }
       28% {
         opacity: 1;
-        transform: translate(calc(-50% + 8px), -10px) scale(1.01);
+        transform: translate(calc(-50% + 8px), -8px) scale(1.01);
       }
       42% {
-        opacity: 0.8;
+        opacity: 0.82;
         transform: translate(calc(-50% - 6px), -32px) scale(1.015);
       }
       60% {
         opacity: 1;
-        transform: translate(calc(-50% + 4px), -56px) scale(1.02);
+        transform: translate(calc(-50% + 4px), -60px) scale(1.02);
       }
       78% {
-        opacity: 0.84;
-        transform: translate(calc(-50% - 3px), -86px) scale(1.025);
+        opacity: 0.86;
+        transform: translate(calc(-50% - 3px), -96px) scale(1.025);
       }
       90% {
-        opacity: 0.92;
-        transform: translate(calc(-50% + 2px), -110px) scale(1.03);
+        opacity: 0.94;
+        transform: translate(calc(-50% + 2px), -130px) scale(1.03);
       }
       100% {
         opacity: 0;
-        transform: translate(-50%, -140px) scale(1.04);
+        transform: translate(-50%, -165px) scale(1.05);
       }
     }
 
@@ -217,10 +244,10 @@
   </header>
 
   <main>
-    <!-- 柔和光暈背景 -->
-    <div class="halo h1"></div>
-    <div class="halo h2"></div>
-    <div class="halo h3"></div>
+    <!-- 暖黃光暈背景 -->
+    <div class="halo halo-main"></div>
+    <div class="halo halo-left"></div>
+    <div class="halo halo-right"></div>
 
     <div id="placeholder">
       目前尚無祝福訊息，請貴賓於簽到頁面留下「迎賓祝福小語」，畫面將自動更新。
@@ -307,7 +334,6 @@
         }
       }
 
-      // 就算找不到完全不重疊的位置，也讓它出現（避免整個不生）
       const duration = 24 + Math.random() * 14; // 24~38 秒
       div.style.animationDuration = duration + 's';
       div.style.visibility = 'visible';
