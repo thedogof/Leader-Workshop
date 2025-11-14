@@ -68,28 +68,29 @@
       z-index:1;
     }
 
- .floating-blessing{
+.floating-blessing{
   position:absolute;
-  max-width:50vw;
+  max-width:52vw;
   min-width:260px;
-  padding:14px 18px;
-  border-radius:20px;
-  background:rgba(75,85,99,.65); /* 柔和深灰，像天燈紙影 */
-  border:1px solid rgba(255,255,255,.08);
+  padding:16px 20px;
+  border-radius:22px;
+  background:rgba(31,41,55,.78);
+  border:1px solid rgba(255,255,255,.10);
   box-shadow:
-    0 0 25px rgba(255,236,179,.25),
-    0 0 40px rgba(255,236,179,.18),
-    0 12px 30px rgba(0,0,0,.6);
+    0 0 26px rgba(254,243,199,.28),
+    0 0 52px rgba(254,243,199,.22),
+    0 14px 32px rgba(0,0,0,.65);
   color:#fde68a;
-  font-size:1.35rem;         /* ⭐ 字體變更大、更清楚 */
-  line-height:1.55;
-  text-shadow:0 0 14px rgba(0,0,0,.9);
+  font-size:1.45rem;   /* ⭐ 再大一點，投影更好讀 */
+  line-height:1.6;
+  text-shadow:0 0 16px rgba(0,0,0,.95);
   opacity:0;
   transform:translate(-50%,0);
-  animation:float-soft 18s ease-in-out forwards;
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
+  animation:float-soft 26s ease-in-out forwards; /* 只是預設，實際還會被 JS 蓋掉 duration */
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
 }
+
 
 
     .floating-blessing .quote{
@@ -114,30 +115,38 @@
       color:#9ca3af;
     }
 
- @keyframes float-soft {
+@keyframes float-soft {
   0% {
     opacity: 0;
     transform: translate(-50%, 20px) scale(0.96);
   }
   10% {
-    opacity: 1;
-    transform: translate(-50%, 0px) scale(1);
+    opacity: 0.9;
+    transform: translate(-50%, 4px) scale(1);
   }
-  35% {
+  25% {
     opacity: 1;
-    transform: translate(calc(-50% + 8px), -18px) scale(1.015);
+    transform: translate(calc(-50% + 6px), -8px) scale(1.01);
   }
-  65% {
+  40% {
+    opacity: 0.78; /* 微微變暗，像呼吸一下 */
+    transform: translate(calc(-50% - 4px), -20px) scale(1.015);
+  }
+  55% {
     opacity: 1;
-    transform: translate(calc(-50% - 6px), -38px) scale(1.02);
+    transform: translate(calc(-50% + 3px), -30px) scale(1.02);
   }
-  90% {
-    opacity: 0.95;
-    transform: translate(calc(-50% + 4px), -55px) scale(1.025);
+  70% {
+    opacity: 0.8;  /* 再閃一下 */
+    transform: translate(calc(-50% - 2px), -42px) scale(1.025);
+  }
+  85% {
+    opacity: 0.9;
+    transform: translate(calc(-50% + 1px), -52px) scale(1.03);
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -65px) scale(1.03);
+    transform: translate(-50%, -65px) scale(1.04);
   }
 }
 
@@ -246,7 +255,7 @@
       div.style.top  = top + '%';
 
       // 每則略微不同節奏
-      const duration = 14 + Math.random() * 8; // 14~22 秒
+      const duration = 22 + Math.random() * 12; // 14~22 秒
       div.style.animationDuration = duration + 's';
 
       div.innerHTML =
@@ -266,24 +275,17 @@
     }
 
     function renderBlessings(items){
-      blessingsData = items || [];
-      blessingIndex = 0;
+  blessingsData = items || [];
+  blessingIndex = 0;
 
-      // 清掉舊的浮動文字
-      layer.innerHTML = '';
-
-      if (!blessingsData.length){
-        setPlaceholderVisible(true);
-        return;
-      }
-      setPlaceholderVisible(false);
-
-      // 一開始先生成幾則
-      const initial = Math.min(6, blessingsData.length);
-      for(let i=0;i<initial;i++){
-        setTimeout(spawnBlessing, i * 800);
-      }
-    }
+  if (!blessingsData.length){
+    setPlaceholderVisible(true);
+  } else {
+    setPlaceholderVisible(false);
+  }
+  // 不清空 layer，也不在這邊硬生一堆
+  // 讓既有的祝福自然飄完，新的由 spawnBlessing 慢慢補上
+}
 
     function loadBlessings(){
       const cbName = 'bless_cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
