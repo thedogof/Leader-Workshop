@@ -7,26 +7,29 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
 
-    /* === 整體背景：暖白＋微金 === */
+    /* === 整體背景：暖白＋微金，並讓 main 可以撐滿高度 === */
     body{
       height:100vh;
       padding:16px 24px;
       font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;
       background:radial-gradient(circle at top, #ffffff 0%, #fdfdfb 40%, #f8f7f2 80%);
       overflow:hidden;
-      color:#b1732a; /* 柔金，保留暖感但更淺 */
+      color:#b1732a; /* 柔金色文字 */
+      display:flex;           /* ⭐ 關鍵：改回直向 flex 佈局 */
+      flex-direction:column;  /* ⭐ 主標在上，main 撐滿下面 */
     }
 
     header{
       text-align:center;
       z-index:2;
       position:relative;
+      flex:0 0 auto;
     }
 
     h1{
       font-size:2rem;
       font-weight:700;
-      color:#b1732a; /* 柔亮金色 */
+      color:#b1732a;
       letter-spacing:0.04em;
       text-shadow:
         0 0 12px rgba(255,247,220,.95),
@@ -34,7 +37,7 @@
     }
 
     main{
-      flex:1;
+      flex:1 1 auto;  /* ⭐ 讓祝福牆佔滿剩餘高度 */
       margin-top:8px;
       border-radius:24px;
       background:
@@ -70,7 +73,6 @@
       100% { opacity:.55; transform:scale(0.90); }
     }
 
-    /* 三層光雲：白金、淡黃白、香檳金 */
     .halo.h1{
       width:480px; height:480px;
       top:-160px; left:50%; transform:translateX(-50%);
@@ -90,7 +92,7 @@
       animation-delay:1s;
     }
 
-    /* === 祝福層 === */
+    /* 祝福浮動層 */
     .blessing-layer{
       position:absolute;
       inset:0;
@@ -124,7 +126,7 @@
         rgba(254,252,238,.96)
       );
       border:1px solid rgba(255,234,180,.9);
-      color:#b2762c;  /* 更亮的金棕，不會像告別式 */
+      color:#b2762c;
       font-size:1.38rem;
       line-height:1.6;
 
@@ -151,7 +153,7 @@
       margin-bottom:8px;
       font-weight:600;
       letter-spacing:0.02em;
-      color:#9a641e; /* 更柔和的亮金 */
+      color:#9a641e;
     }
 
     .floating-blessing .quote::before{content:"「";}
@@ -168,16 +170,16 @@
       color:#e8b65f;
     }
 
-    /* === 漂浮動畫（更高＋更柔和） === */
+    /* 漂浮動畫 */
     @keyframes floatUp {
-      0%   { opacity:0; transform:translate(-50%, 32px) scale(0.96); }
-      10%  { opacity:.96; transform:translate(-50%, 8px) scale(1); }
-      30%  { opacity:1;   transform:translate(calc(-50% + 8px), -8px) scale(1.01); }
-      46%  { opacity:.85; transform:translate(calc(-50% - 6px), -36px) scale(1.015); }
-      60%  { opacity:1;   transform:translate(calc(-50% + 4px), -72px) scale(1.02); }
-      80%  { opacity:.88; transform:translate(calc(-50% - 3px), -116px) scale(1.03); }
-      92%  { opacity:.94; transform:translate(calc(-50% + 2px), -150px) scale(1.04); }
-      100% { opacity:0;   transform:translate(-50%, -190px) scale(1.06); }
+      0%   { opacity:0;  transform:translate(-50%, 32px) scale(0.96); }
+      10%  { opacity:.96;transform:translate(-50%, 8px)  scale(1); }
+      30%  { opacity:1;  transform:translate(calc(-50% + 8px), -8px)  scale(1.01); }
+      46%  { opacity:.85;transform:translate(calc(-50% - 6px), -36px) scale(1.015); }
+      60%  { opacity:1;  transform:translate(calc(-50% + 4px), -72px) scale(1.02); }
+      80%  { opacity:.88;transform:translate(calc(-50% - 3px), -116px)scale(1.03); }
+      92%  { opacity:.94;transform:translate(calc(-50% + 2px), -150px)scale(1.04); }
+      100% { opacity:0;  transform:translate(-50%, -190px)         scale(1.06); }
     }
 
     @media(max-width:768px){
