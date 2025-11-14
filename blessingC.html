@@ -3,18 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國際雙語教育課程領導人工作坊｜迎賓祝福牆・暖白精品粒子版 C5</title>
+  <title>國際雙語教育課程領導人工作坊｜迎賓祝福牆・紙纖維灰金版 C7</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
 
-    /* === 整體背景：暖白、對比清楚 === */
+    /* === 整體背景：紙纖維肌理 × 灰金 === */
     body{
       height:100vh;
       padding:16px 24px;
       font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;
-      background:radial-gradient(circle at top, #ffffff 0%, #fbfbf8 45%, #f3f2ec 85%);
+      /* 底色：溫和偏冷的象牙白 */
+      background-color:#f4f3ef;
+      /* 紙纖維感：細線＋大面積淡雜訊疊加 */
+      background-image:
+        /* 細橫纖維 */
+        repeating-linear-gradient(
+          180deg,
+          rgba(200,195,185,0.16) 0px,
+          rgba(200,195,185,0.16) 1px,
+          rgba(244,243,239,0) 2px,
+          rgba(244,243,239,0) 4px
+        ),
+        /* 大塊紙紋陰影 */
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,0.9),
+          rgba(235,231,223,0.95)
+        );
       overflow:hidden;
-      color:#c98a2f;          /* 香檳金 */
+      color:#8c7a5a;          /* 柔和灰金 */
       display:flex;
       flex-direction:column;
     }
@@ -28,70 +45,70 @@
 
     h1{
       font-size:2rem;
-      font-weight:700;
-      color:#c98a2f;
-      letter-spacing:0.04em;
+      font-weight:600;
+      color:#8c7a5a;          /* 灰金標題 */
+      letter-spacing:0.18em;
       text-shadow:
-        0 0 8px rgba(255,249,221,.9),
-        0 0 18px rgba(255,235,180,.45);
+        0 0 2px rgba(255,255,255,.9);
     }
 
     main{
       flex:1 1 auto;
-      margin-top:8px;
-      border-radius:24px;
-      background:linear-gradient(
-        to bottom right,
-        rgba(255,255,255,.98),
-        rgba(252,249,236,.94)
-      );
+      margin-top:10px;
+      border-radius:26px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.98),
+          rgba(248,247,243,.96)
+        );
       position:relative;
       overflow:hidden;
-      padding:16px;
+      padding:18px;
       box-shadow:
-        0 12px 40px rgba(200,180,120,.25),
-        0 0 0 1px rgba(236,229,207,.8);
+        0 16px 42px rgba(150,140,120,.22),
+        0 0 0 1px rgba(220,215,204,.9);
     }
 
-    /* === 背景光雲：變小、變淡，不那麼朦朧 === */
+    /* === 背景光雲：更克制，偏冷灰金 === */
     .halo{
       position:absolute;
       border-radius:999px;
-      filter:blur(32px);
+      filter:blur(46px);
       mix-blend-mode:screen;
-      animation:haloGlow 16s ease-in-out infinite;
-      opacity:.55;
+      animation:haloGlow 20s ease-in-out infinite;
+      opacity:.40;
       pointer-events:none;
       z-index:0;
     }
 
     @keyframes haloGlow {
-      0%   { opacity:.45; transform:scale(0.9); }
-      25%  { opacity:.8;  transform:scale(1.03); }
-      50%  { opacity:.55; transform:scale(0.96); }
-      75%  { opacity:.85; transform:scale(1.06); }
-      100% { opacity:.45; transform:scale(0.9); }
+      0%   { opacity:.32; transform:scale(0.95); }
+      25%  { opacity:.6;  transform:scale(1.02); }
+      50%  { opacity:.38; transform:scale(0.98); }
+      75%  { opacity:.65; transform:scale(1.04); }
+      100% { opacity:.32; transform:scale(0.95); }
     }
 
     .halo.h1{
-      width:360px; height:360px;
+      width:340px; height:340px;
       top:-120px; left:50%; transform:translateX(-50%);
-      background:radial-gradient(circle, #fff8db 0%, rgba(255,255,255,0) 70%);
+      background:radial-gradient(circle, #f7f1dc 0%, rgba(255,255,255,0) 72%);
     }
     .halo.h2{
-      width:280px; height:280px;
+      width:260px; height:260px;
       bottom:-110px; left:-40px;
-      background:radial-gradient(circle, #fff2ce 0%, rgba(255,255,255,0) 70%);
-      animation-delay:2s;
+      background:radial-gradient(circle, #ece3cf 0%, rgba(255,255,255,0) 70%);
+      animation-delay:2.5s;
     }
     .halo.h3{
-      width:280px; height:280px;
+      width:260px; height:260px;
       bottom:-120px; right:-40px;
-      background:radial-gradient(circle, #ffeebe 0%, rgba(255,255,255,0) 70%);
-      animation-delay:1s;
+      background:radial-gradient(circle, #e8e0d0 0%, rgba(255,255,255,0) 70%);
+      animation-delay:1.2s;
     }
 
-    /* === 金粉粒子層（更細更多） === */
+    /* === 紙屑／粉塵型粒子層（偏灰金，低調） === */
     .particle-layer{
       position:absolute;
       inset:0;
@@ -103,30 +120,30 @@
     .particle{
       position:absolute;
       border-radius:999px;
-      background:radial-gradient(circle, #ffe4b8 0%, rgba(255,227,185,0) 70%);
+      background:radial-gradient(circle, #d7c8ac 0%, rgba(215,200,172,0) 72%);
       opacity:0;
       mix-blend-mode:screen;
       animation:particleFloat linear infinite;
-      filter:blur(0.3px);
+      filter:blur(0.5px);
     }
 
     @keyframes particleFloat{
       0%{
-        transform:translate3d(0,0,0) scale(0.6);
+        transform:translate3d(0,0,0) scale(0.7);
         opacity:0;
       }
-      10%{
-        opacity:.45;
+      15%{
+        opacity:.32;
       }
-      50%{
-        transform:translate3d(10px,-70px,0) scale(0.9);
-        opacity:.9;
+      55%{
+        transform:translate3d(10px,-60px,0) scale(0.9);
+        opacity:.8;
       }
       90%{
-        opacity:.3;
+        opacity:.18;
       }
       100%{
-        transform:translate3d(-6px,-130px,0) scale(0.6);
+        transform:translate3d(-8px,-120px,0) scale(0.7);
         opacity:0;
       }
     }
@@ -146,41 +163,41 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:1.4rem;
-      color:#d8a656;
-      text-shadow:0 0 8px rgba(255,245,215,.9);
+      font-size:1.3rem;
+      color:#9b8764;
+      text-shadow:0 0 4px rgba(255,252,242,.9);
       z-index:2;
       text-align:center;
       padding:0 40px;
     }
 
-    /* === 浮動祝福卡片 === */
+    /* === 浮動祝福卡片：像高級信紙壓紋 === */
     .floating-blessing{
       position:absolute;
       max-width:50vw;
       min-width:260px;
-      padding:14px 20px;
+      padding:14px 22px;
       border-radius:22px;
-      background:linear-gradient(
-        135deg,
-        rgba(255,255,255,.99),
-        rgba(254,252,241,.95)
-      );
-      border:1px solid rgba(250,227,186,.95);
-      color:#c98a2f;
-      font-size:1.36rem;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.98),
+          rgba(247,246,241,.96)
+        );
+      border:1px solid rgba(214,206,192,.95);
+      color:#6e5d45;          /* 文字偏咖啡墨色 */
+      font-size:1.32rem;
       line-height:1.6;
 
       text-shadow:
-        0 0 2px rgba(255,255,255,1),
-        0 0 8px rgba(255,240,210,.75);
+        0 0 1px rgba(255,255,255,0.9);
 
       box-shadow:
-        0 6px 20px rgba(210,180,110,.35),
-        0 0 28px rgba(255,240,210,.9);
+        0 6px 20px rgba(150,140,125,.26),
+        0 0 0 1px rgba(237,233,224,.9);
 
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
 
       opacity:0;
       transform:translate(-50%,0);
@@ -191,25 +208,25 @@
       display:block;
       margin-bottom:8px;
       font-weight:600;
-      letter-spacing:0.02em;
-      color:#e4a73e;
+      letter-spacing:0.04em;
+      color:#8c7448;          /* 灰金標語文字 */
     }
 
     .floating-blessing .quote::before{content:"「";}
     .floating-blessing .quote::after{content:"」";}
 
     .floating-blessing .meta{
-      margin-top:4px;
-      font-size:1rem;
-      color:#d8b568;
+      margin-top:6px;
+      font-size:0.96rem;
+      color:#a1906c;
     }
     .floating-blessing .meta span+span::before{
       content:"／";
       margin:0 .25rem;
-      color:#eac57d;
+      color:#b9a57c;
     }
 
-    /* 漂浮動畫 */
+    /* 漂浮動畫（沿用原本節奏） */
     @keyframes floatUp {
       0%   { opacity:0;  transform:translate(-50%, 28px) scale(0.97); }
       10%  { opacity:.96;transform:translate(-50%, 6px)  scale(1); }
@@ -224,7 +241,7 @@
     @media(max-width:768px){
       .floating-blessing{
         max-width:72vw;
-        font-size:1.18rem;
+        font-size:1.16rem;
       }
     }
   </style>
@@ -242,7 +259,7 @@
   <div class="halo h2"></div>
   <div class="halo h3"></div>
 
-  <!-- 金粉粒子層 -->
+  <!-- 紙屑粉塵粒子層 -->
   <div class="particle-layer" id="particle-layer"></div>
 
   <div id="placeholder">
@@ -358,24 +375,24 @@
   loadBlessings();
   setInterval(loadBlessings,10000);
 
-  // === 產生大量細金粉粒子 ===
+  // === 產生紙塵感粒子 ===
   function initParticles(){
     if(!particleLayer) return;
 
-    const COUNT = 500; // 顆數：可以 150~240 之間微調
+    const COUNT = 420; // 顆數，紙屑感但不炸裂
 
     for(let i=0;i<COUNT;i++){
       const p = document.createElement('div');
       p.className = 'particle';
 
-      const size = 5 + Math.random()*2;  // 1.5~3px
+      const size = 1.4 + Math.random()*1.1;  // 約 1.4~2.5px
       p.style.width = size + 'px';
       p.style.height = size + 'px';
 
       p.style.left = Math.random()*100 + '%';
       p.style.top  = Math.random()*100 + '%';
 
-      const dur   = 18 + Math.random()*24; // 18~42 秒
+      const dur   = 22 + Math.random()*24; // 22~46 秒
       const delay = -Math.random()*dur;
       p.style.animationDuration = dur + 's';
       p.style.animationDelay    = delay + 's';
