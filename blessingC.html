@@ -3,121 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國際雙語教育課程領導人工作坊｜迎賓祝福牆・暖白高光版</title>
+  <title>國際雙語教育課程領導人工作坊｜迎賓祝福牆・暖白精品版</title>
   <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+
+    /* === 整體背景：暖白＋微金 === */
     body{
-      margin:0;
       height:100vh;
-      display:flex;
-      flex-direction:column;
       padding:16px 24px;
       font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;
-      background:
-        radial-gradient(circle at top, #fefce8 0, #fef9c3 32%, #fef3c7 65%, #f5f5f4 100%);
-      color:#78350f; /* 暖棕，不用黑色 */
-      position:relative;
+      background:radial-gradient(circle at top, #ffffff 0%, #fdfdfb 40%, #f8f7f2 80%);
       overflow:hidden;
+      color:#b1732a; /* 柔金，保留暖感但更淺 */
     }
+
     header{
-      flex:0 0 auto;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding-bottom:8px;
-      position:relative;
+      text-align:center;
       z-index:2;
+      position:relative;
     }
+
     h1{
       font-size:2rem;
       font-weight:700;
-      color:#78350f;
-      text-align:center;
-      letter-spacing:0.05em;
+      color:#b1732a; /* 柔亮金色 */
+      letter-spacing:0.04em;
       text-shadow:
-        0 0 14px rgba(254,249,195,.9),
-        0 0 36px rgba(250,204,21,.55);
-    }
-    main{
-      flex:1 1 auto;
-      border-radius:24px;
-      background:linear-gradient(
-        to bottom right,
-        rgba(255,255,255,.96),
-        rgba(254,249,195,.92)
-      );
-      box-shadow:
-        0 18px 55px rgba(250,204,21,.35),
-        0 0 0 1px rgba(253,230,138,.85);
-      padding:16px;
-      position:relative;
-      overflow:hidden;
+        0 0 12px rgba(255,247,220,.95),
+        0 0 32px rgba(255,230,150,.65);
     }
 
-    /* === 暖黃色光暈背景（取代天燈） === */
+    main{
+      flex:1;
+      margin-top:8px;
+      border-radius:24px;
+      background:
+        linear-gradient(
+          to bottom right,
+          rgba(255,255,255,.96),
+          rgba(252,249,236,.90)
+        );
+      position:relative;
+      overflow:hidden;
+      padding:16px;
+      box-shadow:
+        0 12px 40px rgba(200,180,120,.25),
+        0 0 0 1px rgba(245,235,200,.6);
+    }
+
+    /* === 背景動態光雲（強化呼吸感） === */
     .halo{
       position:absolute;
       border-radius:999px;
-      filter:blur(40px);
+      filter:blur(60px);
+      mix-blend-mode:screen;
+      animation:haloGlow 14s ease-in-out infinite;
       opacity:.85;
       pointer-events:none;
-      z-index:0;
-      mix-blend-mode:screen;
-      animation-duration:22s;
-      animation-iteration-count:infinite;
-      animation-timing-function:ease-in-out;
-    }
-    .halo-main{
-      width:520px;
-      height:520px;
-      top:-160px;
-      left:50%;
-      transform:translateX(-50%);
-      background:radial-gradient(circle, #fef9c3 0, rgba(250,250,250,0) 70%);
-      animation-name:haloPulseMain;
-    }
-    .halo-left{
-      width:420px;
-      height:420px;
-      bottom:-180px;
-      left:-80px;
-      background:radial-gradient(circle, #fde68a 0, rgba(252,211,77,0) 70%);
-      animation-name:haloPulseLeft;
-    }
-    .halo-right{
-      width:420px;
-      height:420px;
-      bottom:-200px;
-      right:-90px;
-      background:radial-gradient(circle, #facc15 0, rgba(250,204,21,0) 70%);
-      animation-name:haloPulseRight;
     }
 
-    @keyframes haloPulseMain {
-      0%   { opacity:.65; transform:translateX(-50%) scale(0.95); }
-      25%  { opacity:.95; transform:translateX(-50%) scale(1.05); }
-      50%  { opacity:.8;  transform:translateX(-50%) scale(1.02); }
-      75%  { opacity:.98; transform:translateX(-50%) scale(1.08); }
-      100% { opacity:.7;  transform:translateX(-50%) scale(0.96); }
-    }
-    @keyframes haloPulseLeft {
-      0%   { opacity:.5; transform:translateY(6px) scale(0.9); }
-      30%  { opacity:.9; transform:translateY(-4px) scale(1.05); }
-      60%  { opacity:.65; transform:translateY(0px) scale(1.0); }
-      100% { opacity:.5; transform:translateY(8px) scale(0.92); }
-    }
-    @keyframes haloPulseRight {
-      0%   { opacity:.55; transform:translateY(-4px) scale(0.92); }
-      35%  { opacity:.92; transform:translateY(4px) scale(1.06); }
-      70%  { opacity:.7;  transform:translateY(0px) scale(1.0); }
-      100% { opacity:.55; transform:translateY(-6px) scale(0.94); }
+    @keyframes haloGlow {
+      0%   { opacity:.55; transform:scale(0.92); }
+      25%  { opacity:.9;  transform:scale(1.05); }
+      50%  { opacity:.68; transform:scale(0.98); }
+      75%  { opacity:.95; transform:scale(1.08); }
+      100% { opacity:.55; transform:scale(0.90); }
     }
 
-    /* 祝福浮動層 */
+    /* 三層光雲：白金、淡黃白、香檳金 */
+    .halo.h1{
+      width:480px; height:480px;
+      top:-160px; left:50%; transform:translateX(-50%);
+      background:radial-gradient(circle, #fff8db 0%, rgba(255,255,255,0) 70%);
+      animation-delay:0s;
+    }
+    .halo.h2{
+      width:380px; height:380px;
+      bottom:-140px; left:-80px;
+      background:radial-gradient(circle, #fff2ce 0%, rgba(255,255,255,0) 70%);
+      animation-delay:2s;
+    }
+    .halo.h3{
+      width:380px; height:380px;
+      bottom:-160px; right:-60px;
+      background:radial-gradient(circle, #ffeebe 0%, rgba(255,255,255,0) 70%);
+      animation-delay:1s;
+    }
+
+    /* === 祝福層 === */
     .blessing-layer{
       position:absolute;
       inset:0;
@@ -132,16 +105,13 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      color:#a16207;
       font-size:1.4rem;
-      text-align:center;
-      padding:0 40px;
-      pointer-events:none;
+      color:#c08a3a;
+      text-shadow:0 0 12px rgba(255,245,215,.9);
       z-index:1;
-      text-shadow:0 0 10px rgba(254,240,138,.9);
     }
 
-    /* === 漂浮祝福卡片（暖白玻璃＋金光邊緣） === */
+    /* === 浮動祝福卡片 === */
     .floating-blessing{
       position:absolute;
       max-width:50vw;
@@ -149,250 +119,198 @@
       padding:14px 20px;
       border-radius:22px;
       background:linear-gradient(
-        145deg,
+        135deg,
         rgba(255,255,255,.98),
-        rgba(254,249,195,.96)
+        rgba(254,252,238,.96)
       );
-      border:1px solid rgba(253,224,171,.95);
-      box-shadow:
-        0 0 40px rgba(253,224,171,.95),
-        0 0 85px rgba(250,250,250,.95),
-        0 18px 40px rgba(230,169,62,.55);
-      color:#92400e;
-      font-size:1.4rem;
+      border:1px solid rgba(255,234,180,.9);
+      color:#b2762c;  /* 更亮的金棕，不會像告別式 */
+      font-size:1.38rem;
       line-height:1.6;
-      text-shadow:0 0 10px rgba(255,250,230,.95);
-      opacity:0;
-      transform:translate(-50%,0);
-      animation:float-soft 28s ease-in-out forwards;
+
+      text-shadow:
+        0 0 3px rgba(255,255,255,1),
+        0 0 12px rgba(255,240,200,.9),
+        0 0 22px rgba(255,225,150,.7);
+
+      box-shadow:
+        0 0 40px rgba(255,240,200,.95),
+        0 0 85px rgba(255,252,238,.95),
+        0 16px 45px rgba(215,180,105,.35);
+
       backdrop-filter:blur(18px);
       -webkit-backdrop-filter:blur(18px);
+
+      opacity:0;
+      transform:translate(-50%,0);
+      animation:floatUp 30s ease-in-out forwards;
     }
 
     .floating-blessing .quote{
       display:block;
-      margin-bottom:6px;
-      color:#7c2d12;
+      margin-bottom:8px;
       font-weight:600;
-      letter-spacing:0.03em;
+      letter-spacing:0.02em;
+      color:#9a641e; /* 更柔和的亮金 */
     }
-    .floating-blessing .quote::before{
-      content:"「";
-    }
-    .floating-blessing .quote::after{
-      content:"」";
-    }
+
+    .floating-blessing .quote::before{content:"「";}
+    .floating-blessing .quote::after{content:"」";}
+
     .floating-blessing .meta{
       margin-top:4px;
-      font-size:.95rem;
-      color:#b45309;
-      opacity:.96;
+      font-size:1rem;
+      color:#c28d3c;
     }
     .floating-blessing .meta span+span::before{
       content:"／";
       margin:0 .25rem;
-      color:#fbbf24;
+      color:#e8b65f;
     }
 
-    /* 像光之卡片一樣的漂浮＋呼吸＋微閃爍（往上多一點） */
-    @keyframes float-soft {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, 32px) scale(0.96);
-      }
-      10% {
-        opacity: 0.96;
-        transform: translate(-50%, 10px) scale(1);
-      }
-      28% {
-        opacity: 1;
-        transform: translate(calc(-50% + 8px), -8px) scale(1.01);
-      }
-      42% {
-        opacity: 0.82;
-        transform: translate(calc(-50% - 6px), -32px) scale(1.015);
-      }
-      60% {
-        opacity: 1;
-        transform: translate(calc(-50% + 4px), -60px) scale(1.02);
-      }
-      78% {
-        opacity: 0.86;
-        transform: translate(calc(-50% - 3px), -96px) scale(1.025);
-      }
-      90% {
-        opacity: 0.94;
-        transform: translate(calc(-50% + 2px), -130px) scale(1.03);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -165px) scale(1.05);
-      }
+    /* === 漂浮動畫（更高＋更柔和） === */
+    @keyframes floatUp {
+      0%   { opacity:0; transform:translate(-50%, 32px) scale(0.96); }
+      10%  { opacity:.96; transform:translate(-50%, 8px) scale(1); }
+      30%  { opacity:1;   transform:translate(calc(-50% + 8px), -8px) scale(1.01); }
+      46%  { opacity:.85; transform:translate(calc(-50% - 6px), -36px) scale(1.015); }
+      60%  { opacity:1;   transform:translate(calc(-50% + 4px), -72px) scale(1.02); }
+      80%  { opacity:.88; transform:translate(calc(-50% - 3px), -116px) scale(1.03); }
+      92%  { opacity:.94; transform:translate(calc(-50% + 2px), -150px) scale(1.04); }
+      100% { opacity:0;   transform:translate(-50%, -190px) scale(1.06); }
     }
 
-    @media (max-width:768px){
+    @media(max-width:768px){
       .floating-blessing{
         max-width:72vw;
-        font-size:1.2rem;
+        font-size:1.18rem;
       }
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>國際雙語教育課程領導人工作坊｜迎賓祝福牆</h1>
-  </header>
 
-  <main>
-    <!-- 暖黃光暈背景 -->
-    <div class="halo halo-main"></div>
-    <div class="halo halo-left"></div>
-    <div class="halo halo-right"></div>
+<header>
+  <h1>國際雙語教育課程領導人工作坊｜迎賓祝福牆</h1>
+</header>
 
-    <div id="placeholder">
-      目前尚無祝福訊息，請貴賓於簽到頁面留下「迎賓祝福小語」，畫面將自動更新。
-    </div>
-    <div class="blessing-layer" id="blessing-layer"></div>
-  </main>
+<main>
+  <!-- 背景光雲：三層呼吸閃爍 -->
+  <div class="halo h1"></div>
+  <div class="halo h2"></div>
+  <div class="halo h3"></div>
 
-  <script>
-    // 與前兩版共用同一個 Web App
-    const ENDPOINT = "https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec";
+  <div id="placeholder">
+    目前尚無祝福訊息，請貴賓於簽到頁面留下「迎賓祝福小語」，畫面將自動更新。
+  </div>
 
-    const layer = document.getElementById('blessing-layer');
-    const placeholder = document.getElementById('placeholder');
+  <div class="blessing-layer" id="blessing-layer"></div>
+</main>
 
-    let blessingsData = [];
-    let blessingIndex = 0;
-    const MAX_VISIBLE = 12;        // 同時最多幾則浮動祝福
-    const OVERLAP_PADDING = 18;    // 卡片之間預留間距
+<script>
+  const ENDPOINT="https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec";
+  const layer=document.getElementById('blessing-layer');
+  const placeholder=document.getElementById('placeholder');
 
-    function escapeHtml(str){
-      return (str || '').replace(/[&<>"]/g, c => ({
-        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'
-      }[c] || c));
+  let blessingsData=[];
+  let blessingIndex=0;
+  const MAX_VISIBLE=12;
+  const OVERLAP_PADDING=18;
+
+  function escapeHtml(str){
+    return (str||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  }
+
+  function setPlaceholderVisible(s){ placeholder.style.display=s?'flex':'none'; }
+
+  function isOverlapping(rect,others){
+    return others.some(o =>
+      rect.right > o.left - OVERLAP_PADDING &&
+      rect.left  < o.right + OVERLAP_PADDING &&
+      rect.bottom> o.top - OVERLAP_PADDING &&
+      rect.top   < o.bottom + OVERLAP_PADDING
+    );
+  }
+
+  function spawnBlessing(){
+    if(!blessingsData.length) return;
+
+    const existing=Array.from(layer.querySelectorAll('.floating-blessing'));
+    if(existing.length>=MAX_VISIBLE) return;
+
+    const b = blessingsData[ blessingIndex % blessingsData.length ];
+    blessingIndex++;
+
+    const div=document.createElement('div');
+    div.className='floating-blessing';
+    div.style.visibility='hidden';
+
+    div.innerHTML=
+      '<span class="quote">'+escapeHtml(b.blessing)+'</span>'+
+      '<div class="meta">'+
+        '<span>'+escapeHtml(b.name||'')+'</span>'+
+        '<span>'+escapeHtml(b.unit||'')+'</span>'+
+        '<span>'+escapeHtml(b.title||'')+'</span>'+
+      '</div>';
+
+    layer.appendChild(div);
+
+    const rects=existing.map(el=>el.getBoundingClientRect());
+    let placed=false, tries=0;
+
+    while(tries<12 && !placed){
+      const left =15+Math.random()*70;
+      const top  =18+Math.random()*60;
+      div.style.left=left+'%';
+      div.style.top =top+'%';
+
+      const r=div.getBoundingClientRect();
+      if(!isOverlapping(r,rects)) placed=true;
+      else tries++;
     }
 
-    function setPlaceholderVisible(show){
-      placeholder.style.display = show ? 'flex' : 'none';
-    }
+    const duration=26+Math.random()*16;
+    div.style.animationDuration=duration+'s';
+    div.style.visibility='visible';
 
-    function isOverlapping(rect, others){
-      for (const o of others){
-        if (
-          rect.right  > o.left  - OVERLAP_PADDING &&
-          rect.left   < o.right + OVERLAP_PADDING &&
-          rect.bottom > o.top   - OVERLAP_PADDING &&
-          rect.top    < o.bottom+ OVERLAP_PADDING
-        ){
-          return true;
+    setTimeout(()=>div.remove(), (duration+1)*1000);
+  }
+
+  function renderBlessings(items){
+    blessingsData=items||[];
+    blessingIndex=0;
+
+    if(!blessingsData.length){
+      setPlaceholderVisible(true);
+    }else{
+      setPlaceholderVisible(false);
+
+      if(layer.querySelectorAll('.floating-blessing').length<3){
+        const initial=Math.min(6,blessingsData.length);
+        for(let i=0;i<initial;i++){
+          setTimeout(spawnBlessing,i*800);
         }
       }
-      return false;
     }
+  }
 
-    function spawnBlessing(){
-      if (!blessingsData.length) return;
+  function loadBlessings(){
+    const cb='cb_'+Date.now();
+    const s=document.createElement('script');
+    s.src=ENDPOINT+'?mode=listBlessings&callback='+cb;
 
-      const existingEls = Array.from(layer.querySelectorAll('.floating-blessing'));
-      if (existingEls.length >= MAX_VISIBLE) return;
+    window[cb]=data=>{
+      if(data && data.ok) renderBlessings(data.items||[]);
+      delete window[cb];
+      s.remove();
+    };
+    document.body.appendChild(s);
+  }
 
-      const b = blessingsData[blessingIndex % blessingsData.length];
-      blessingIndex++;
-
-      const div = document.createElement('div');
-      div.className = 'floating-blessing';
-      div.style.visibility = 'hidden';
-
-      div.innerHTML =
-        '<span class="quote">' + escapeHtml(b.blessing) + '</span>' +
-        '<div class="meta">' +
-          '<span>' + escapeHtml(b.name || '') + '</span>' +
-          '<span>' + escapeHtml(b.unit || '') + '</span>' +
-          '<span>' + escapeHtml(b.title || '') + '</span>' +
-        '</div>';
-
-      layer.appendChild(div);
-
-      const otherRects = existingEls.map(el => el.getBoundingClientRect());
-
-      let attempts = 0;
-      const maxAttempts = 10;
-      let placed = false;
-
-      while (attempts < maxAttempts && !placed){
-        const left = 15 + Math.random() * 70;   // 15% ~ 85%
-        const top  = 18 + Math.random() * 60;   // 18% ~ 78%
-        div.style.left = left + '%';
-        div.style.top  = top + '%';
-
-        const rect = div.getBoundingClientRect();
-        if (!isOverlapping(rect, otherRects)){
-          placed = true;
-        }else{
-          attempts++;
-        }
-      }
-
-      const duration = 24 + Math.random() * 14; // 24~38 秒
-      div.style.animationDuration = duration + 's';
-      div.style.visibility = 'visible';
-
-      setTimeout(() => {
-        div.remove();
-      }, (duration + 1) * 1000);
-    }
-
-    function renderBlessings(items){
-      blessingsData = items || [];
-      blessingIndex = 0;
-
-      if (!blessingsData.length){
-        setPlaceholderVisible(true);
-      } else {
-        setPlaceholderVisible(false);
-
-        const existing = layer.querySelectorAll('.floating-blessing').length;
-        if (existing < 4){
-          const initial = Math.min(6, blessingsData.length);
-          for(let i=0;i<initial;i++){
-            setTimeout(spawnBlessing, i * 900);
-          }
-        }
-      }
-      // 不清空舊的，讓它們自然飄完，避免瞬間全消失
-    }
-
-    function loadBlessings(){
-      const cbName = 'bless_cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
-      const script = document.createElement('script');
-      script.src = ENDPOINT + '?mode=listBlessings&callback=' + cbName;
-
-      window[cbName] = function(data){
-        try{
-          if (data && data.ok) {
-            renderBlessings(data.items || []);
-          }
-        }finally{
-          delete window[cbName];
-          script.remove();
-        }
-      };
-
-      script.onerror = function(){
-        delete window[cbName];
-        script.remove();
-      };
-
-      document.body.appendChild(script);
-    }
-
-    // 定期產生新的浮動祝福（錯落出現）
-    setInterval(spawnBlessing, 2300);
-
-    // 定期重新抓資料
-    loadBlessings();
-    setInterval(loadBlessings, 10000);
-  </script>
+  setInterval(spawnBlessing,2400);
+  loadBlessings();
+  setInterval(loadBlessings,10000);
+</script>
 </body>
 </html>
