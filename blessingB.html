@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>國際雙語教育課程領導人工作坊｜迎賓祝福牆・漂浮版</title>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
     body{
       margin:0;
       height:100vh;
@@ -68,30 +72,29 @@
       z-index:1;
     }
 
-.floating-blessing{
-  position:absolute;
-  max-width:52vw;
-  min-width:260px;
-  padding:16px 20px;
-  border-radius:22px;
-  background:rgba(31,41,55,.78);
-  border:1px solid rgba(255,255,255,.10);
-  box-shadow:
-    0 0 26px rgba(254,243,199,.28),
-    0 0 52px rgba(254,243,199,.22),
-    0 14px 32px rgba(0,0,0,.65);
-  color:#fde68a;
-  font-size:1.45rem;   /* ⭐ 再大一點，投影更好讀 */
-  line-height:1.6;
-  text-shadow:0 0 16px rgba(0,0,0,.95);
-  opacity:0;
-  transform:translate(-50%,0);
-  animation:float-soft 26s ease-in-out forwards; /* 只是預設，實際還會被 JS 蓋掉 duration */
-  backdrop-filter:blur(7px);
-  -webkit-backdrop-filter:blur(7px);
-}
-
-
+    /* === 漂浮祝福卡片 === */
+    .floating-blessing{
+      position:absolute;
+      max-width:50vw;
+      min-width:260px;
+      padding:14px 18px;
+      border-radius:20px;
+      background:rgba(75,85,99,.65); /* 保留你現在的質感底色 */
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:
+        0 0 30px rgba(255,236,179,.32),
+        0 0 55px rgba(255,236,179,.24),
+        0 12px 30px rgba(0,0,0,.65); /* 外光暈稍微加強一點 */
+      color:#fde68a;
+      font-size:1.45rem;         /* 字再大一點 */
+      line-height:1.6;
+      text-shadow:0 0 16px rgba(0,0,0,.95);
+      opacity:0;
+      transform:translate(-50%,0);
+      animation:float-soft 28s ease-in-out forwards;
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+    }
 
     .floating-blessing .quote{
       display:block;
@@ -105,7 +108,7 @@
     }
     .floating-blessing .meta{
       margin-top:2px;
-      font-size:.9rem;
+      font-size:.95rem;
       color:#e5e7eb;
       opacity:.92;
     }
@@ -115,41 +118,41 @@
       color:#9ca3af;
     }
 
-@keyframes float-soft {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, 20px) scale(0.96);
-  }
-  10% {
-    opacity: 0.9;
-    transform: translate(-50%, 4px) scale(1);
-  }
-  25% {
-    opacity: 1;
-    transform: translate(calc(-50% + 6px), -8px) scale(1.01);
-  }
-  40% {
-    opacity: 0.78; /* 微微變暗，像呼吸一下 */
-    transform: translate(calc(-50% - 4px), -20px) scale(1.015);
-  }
-  55% {
-    opacity: 1;
-    transform: translate(calc(-50% + 3px), -30px) scale(1.02);
-  }
-  70% {
-    opacity: 0.8;  /* 再閃一下 */
-    transform: translate(calc(-50% - 2px), -42px) scale(1.025);
-  }
-  85% {
-    opacity: 0.9;
-    transform: translate(calc(-50% + 1px), -52px) scale(1.03);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -65px) scale(1.04);
-  }
-}
-
+    /* 像天燈一樣的漂浮＋呼吸＋微閃爍 */
+    @keyframes float-soft {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 28px) scale(0.95);
+      }
+      10% {
+        opacity: 0.95;
+        transform: translate(-50%, 6px) scale(1);
+      }
+      28% {
+        opacity: 1;
+        transform: translate(calc(-50% + 8px), -12px) scale(1.01);
+      }
+      42% {
+        opacity: 0.78; /* 呼吸一下，略暗 */
+        transform: translate(calc(-50% - 6px), -30px) scale(1.015);
+      }
+      60% {
+        opacity: 1;
+        transform: translate(calc(-50% + 4px), -52px) scale(1.02);
+      }
+      78% {
+        opacity: 0.82; /* 再閃一下 */
+        transform: translate(calc(-50% - 3px), -78px) scale(1.025);
+      }
+      90% {
+        opacity: 0.9;
+        transform: translate(calc(-50% + 2px), -96px) scale(1.03);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -120px) scale(1.04); /* 漂得更高 */
+      }
+    }
 
     /* === 天燈背景（沿用原版） === */
     .lantern-container{
@@ -192,8 +195,8 @@
 
     @media (max-width:768px){
       .floating-blessing{
-        max-width:70vw;
-        font-size:1rem;
+        max-width:72vw;
+        font-size:1.2rem;
       }
     }
   </style>
@@ -222,7 +225,7 @@
 
     let blessingsData = [];
     let blessingIndex = 0;
-    const MAX_VISIBLE = 10;   // 畫面同時最多幾則浮動祝福
+    const MAX_VISIBLE = 12;   // 同時最多幾則浮動祝福
 
     function escapeHtml(str){
       return (str || '').replace(/[&<>"]/g, c => ({
@@ -254,8 +257,8 @@
       div.style.left = left + '%';
       div.style.top  = top + '%';
 
-      // 每則略微不同節奏
-      const duration = 22 + Math.random() * 12; // 14~22 秒
+      // 每則略微不同節奏，停留久一點
+      const duration = 24 + Math.random() * 14; // 24~38 秒
       div.style.animationDuration = duration + 's';
 
       div.innerHTML =
@@ -275,17 +278,25 @@
     }
 
     function renderBlessings(items){
-  blessingsData = items || [];
-  blessingIndex = 0;
+      blessingsData = items || [];
+      blessingIndex = 0;
 
-  if (!blessingsData.length){
-    setPlaceholderVisible(true);
-  } else {
-    setPlaceholderVisible(false);
-  }
-  // 不清空 layer，也不在這邊硬生一堆
-  // 讓既有的祝福自然飄完，新的由 spawnBlessing 慢慢補上
-}
+      if (!blessingsData.length){
+        setPlaceholderVisible(true);
+      } else {
+        setPlaceholderVisible(false);
+
+        // 如果目前畫面上幾乎沒有祝福，先種幾顆上來，避免一開始太空
+        const existing = layer.querySelectorAll('.floating-blessing').length;
+        if (existing < 4){
+          const initial = Math.min(6, blessingsData.length);
+          for(let i=0;i<initial;i++){
+            setTimeout(spawnBlessing, i * 900);
+          }
+        }
+      }
+      // 不清空舊的，讓它們自然飄完，避免瞬間全消失
+    }
 
     function loadBlessings(){
       const cbName = 'bless_cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
@@ -311,8 +322,8 @@
       document.body.appendChild(script);
     }
 
-    // 定期產生新的浮動祝福
-    setInterval(spawnBlessing, 2500);
+    // 定期產生新的浮動祝福（錯落出現）
+    setInterval(spawnBlessing, 2300);
 
     // 定期重新抓資料（例如每 10 秒）
     loadBlessings();
