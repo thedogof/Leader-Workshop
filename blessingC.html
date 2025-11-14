@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國際雙語教育課程領導人工作坊｜迎賓祝福牆・暖白精品粒子版 C4</title>
+  <title>國際雙語教育課程領導人工作坊｜迎賓祝福牆・暖白精品粒子版 C5</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
 
-    /* === 整體背景：暖白、對比更清楚 === */
+    /* === 整體背景：暖白、對比清楚 === */
     body{
       height:100vh;
       padding:16px 24px;
       font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;
       background:radial-gradient(circle at top, #ffffff 0%, #fbfbf8 45%, #f3f2ec 85%);
       overflow:hidden;
-      color:#c98a2f;          /* 比剛剛略深一點的香檳金，對比更好 */
+      color:#c98a2f;          /* 香檳金 */
       display:flex;
       flex-direction:column;
     }
@@ -57,7 +57,7 @@
     .halo{
       position:absolute;
       border-radius:999px;
-      filter:blur(32px);           /* 原本 60，現在清楚很多 */
+      filter:blur(32px);
       mix-blend-mode:screen;
       animation:haloGlow 16s ease-in-out infinite;
       opacity:.55;
@@ -91,7 +91,7 @@
       animation-delay:1s;
     }
 
-    /* === 金粉粒子層（放大＋變亮） === */
+    /* === 金粉粒子層（更細更多） === */
     .particle-layer{
       position:absolute;
       inset:0;
@@ -103,29 +103,30 @@
     .particle{
       position:absolute;
       border-radius:999px;
-      background:radial-gradient(circle, #fed7aa 0%, rgba(254,215,170,0) 70%);
+      background:radial-gradient(circle, #ffe4b8 0%, rgba(255,227,185,0) 70%);
       opacity:0;
       mix-blend-mode:screen;
       animation:particleFloat linear infinite;
+      filter:blur(0.3px);
     }
 
     @keyframes particleFloat{
       0%{
-        transform:translate3d(0,0,0) scale(0.7);
+        transform:translate3d(0,0,0) scale(0.6);
         opacity:0;
       }
       10%{
-        opacity:.9;
+        opacity:.45;
       }
       50%{
-        transform:translate3d(18px,-55px,0) scale(1.05);
-        opacity:1;
+        transform:translate3d(10px,-70px,0) scale(0.9);
+        opacity:.9;
       }
       90%{
-        opacity:.5;
+        opacity:.3;
       }
       100%{
-        transform:translate3d(-12px,-110px,0) scale(0.7);
+        transform:translate3d(-6px,-130px,0) scale(0.6);
         opacity:0;
       }
     }
@@ -153,7 +154,7 @@
       padding:0 40px;
     }
 
-    /* === 浮動祝福卡片：光暈收一點，字更清楚 === */
+    /* === 浮動祝福卡片 === */
     .floating-blessing{
       position:absolute;
       max-width:50vw;
@@ -191,7 +192,7 @@
       margin-bottom:8px;
       font-weight:600;
       letter-spacing:0.02em;
-      color:#e4a73e; /* 主句：亮金，對比更好 */
+      color:#e4a73e;
     }
 
     .floating-blessing .quote::before{content:"「";}
@@ -208,7 +209,7 @@
       color:#eac57d;
     }
 
-    /* 漂浮動畫：保留上升感＋呼吸，但畫面更清楚 */
+    /* 漂浮動畫 */
     @keyframes floatUp {
       0%   { opacity:0;  transform:translate(-50%, 28px) scale(0.97); }
       10%  { opacity:.96;transform:translate(-50%, 6px)  scale(1); }
@@ -357,28 +358,27 @@
   loadBlessings();
   setInterval(loadBlessings,10000);
 
-  // === 產生金粉粒子（這次更大、更亮） ===
+  // === 產生大量細金粉粒子 ===
   function initParticles(){
     if(!particleLayer) return;
-    const COUNT = 55; // 多一點，存在感更明顯
+
+    const COUNT = 200; // 顆數：可以 150~240 之間微調
 
     for(let i=0;i<COUNT;i++){
-      const p=document.createElement('div');
-      p.className='particle';
+      const p = document.createElement('div');
+      p.className = 'particle';
 
-      const size = 5 + Math.random()*5; // 5~10px
-      p.style.width = size+'px';
-      p.style.height = size+'px';
+      const size = 1.5 + Math.random()*1.5;  // 1.5~3px
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
 
-      const left = Math.random()*100;
-      const top  = Math.random()*100;
-      p.style.left = left+'%';
-      p.style.top  = top+'%';
+      p.style.left = Math.random()*100 + '%';
+      p.style.top  = Math.random()*100 + '%';
 
-      const dur = 14 + Math.random()*14;      // 14~28s
-      const delay = -Math.random()*dur;       // 負 delay 拉開時間點
-      p.style.animationDuration = dur+'s';
-      p.style.animationDelay    = delay+'s';
+      const dur   = 18 + Math.random()*24; // 18~42 秒
+      const delay = -Math.random()*dur;
+      p.style.animationDuration = dur + 's';
+      p.style.animationDelay    = delay + 's';
 
       particleLayer.appendChild(p);
     }
