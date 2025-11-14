@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國際雙語教育課程領導人工作坊｜迎賓祝福牆・暖白精品版</title>
+  <title>國際雙語教育課程領導人工作坊｜迎賓祝福牆・暖白精品粒子版</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
 
-    /* === 整體背景：暖白＋微金，並讓 main 可以撐滿高度 === */
+    /* === 整體背景：暖白＋微金，高級乾淨 === */
     body{
       height:100vh;
       padding:16px 24px;
       font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;
       background:radial-gradient(circle at top, #ffffff 0%, #fdfdfb 40%, #f8f7f2 80%);
       overflow:hidden;
-      color:#b1732a; /* 柔金色文字 */
-      display:flex;           /* ⭐ 關鍵：改回直向 flex 佈局 */
-      flex-direction:column;  /* ⭐ 主標在上，main 撐滿下面 */
+      color:#d9a953;          /* 柔亮香檳金 */
+      display:flex;
+      flex-direction:column;
     }
 
     header{
@@ -29,23 +29,22 @@
     h1{
       font-size:2rem;
       font-weight:700;
-      color:#b1732a;
+      color:#d9a953;
       letter-spacing:0.04em;
       text-shadow:
-        0 0 12px rgba(255,247,220,.95),
-        0 0 32px rgba(255,230,150,.65);
+        0 0 14px rgba(255,249,221,.95),
+        0 0 32px rgba(255,235,180,.55);
     }
 
     main{
-      flex:1 1 auto;  /* ⭐ 讓祝福牆佔滿剩餘高度 */
+      flex:1 1 auto;
       margin-top:8px;
       border-radius:24px;
-      background:
-        linear-gradient(
-          to bottom right,
-          rgba(255,255,255,.96),
-          rgba(252,249,236,.90)
-        );
+      background:linear-gradient(
+        to bottom right,
+        rgba(255,255,255,.97),
+        rgba(252,249,236,.92)
+      );
       position:relative;
       overflow:hidden;
       padding:16px;
@@ -54,7 +53,7 @@
         0 0 0 1px rgba(245,235,200,.6);
     }
 
-    /* === 背景動態光雲（強化呼吸感） === */
+    /* === 背景動態光雲（暖白金光呼吸） === */
     .halo{
       position:absolute;
       border-radius:999px;
@@ -63,6 +62,7 @@
       animation:haloGlow 14s ease-in-out infinite;
       opacity:.85;
       pointer-events:none;
+      z-index:0;
     }
 
     @keyframes haloGlow {
@@ -92,12 +92,54 @@
       animation-delay:1s;
     }
 
-    /* 祝福浮動層 */
+    /* === 金粉粒子層 === */
+    .particle-layer{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index:1;
+      overflow:hidden;
+    }
+
+    .particle{
+      position:absolute;
+      width:6px;
+      height:6px;
+      border-radius:999px;
+      background:radial-gradient(circle, #ffe8b6 0%, rgba(255,232,182,0) 70%);
+      opacity:0;
+      filter:blur(0.3px);
+      mix-blend-mode:screen;
+      animation:particleFloat linear infinite;
+    }
+
+    @keyframes particleFloat{
+      0%{
+        transform:translate3d(0,0,0) scale(0.7);
+        opacity:0;
+      }
+      10%{
+        opacity:.7;
+      }
+      50%{
+        transform:translate3d(12px,-40px,0) scale(1);
+        opacity:1;
+      }
+      90%{
+        opacity:.4;
+      }
+      100%{
+        transform:translate3d(-8px,-80px,0) scale(0.6);
+        opacity:0;
+      }
+    }
+
+    /* === 祝福浮動層 === */
     .blessing-layer{
       position:absolute;
       inset:0;
       overflow:hidden;
-      z-index:2;
+      z-index:3;
       pointer-events:none;
     }
 
@@ -108,12 +150,14 @@
       align-items:center;
       justify-content:center;
       font-size:1.4rem;
-      color:#c08a3a;
+      color:#dcb67a;
       text-shadow:0 0 12px rgba(255,245,215,.9);
-      z-index:1;
+      z-index:2;
+      text-align:center;
+      padding:0 40px;
     }
 
-    /* === 浮動祝福卡片 === */
+    /* === 浮動祝福卡片：暖白玻璃＋香檳金字 === */
     .floating-blessing{
       position:absolute;
       max-width:50vw;
@@ -126,14 +170,14 @@
         rgba(254,252,238,.96)
       );
       border:1px solid rgba(255,234,180,.9);
-      color:#b2762c;
+      color:#d9a953;  /* 主體字：香檳金 */
       font-size:1.38rem;
       line-height:1.6;
 
       text-shadow:
-        0 0 3px rgba(255,255,255,1),
-        0 0 12px rgba(255,240,200,.9),
-        0 0 22px rgba(255,225,150,.7);
+        0 0 4px rgba(255,255,255,1),
+        0 0 14px rgba(255,240,200,.8),
+        0 0 24px rgba(255,230,150,.6);
 
       box-shadow:
         0 0 40px rgba(255,240,200,.95),
@@ -153,7 +197,7 @@
       margin-bottom:8px;
       font-weight:600;
       letter-spacing:0.02em;
-      color:#9a641e;
+      color:#e5b86a; /* 主句：更亮的奶金 */
     }
 
     .floating-blessing .quote::before{content:"「";}
@@ -162,15 +206,15 @@
     .floating-blessing .meta{
       margin-top:4px;
       font-size:1rem;
-      color:#c28d3c;
+      color:#dcb67a; /* 名稱／單位：柔金 */
     }
     .floating-blessing .meta span+span::before{
       content:"／";
       margin:0 .25rem;
-      color:#e8b65f;
+      color:#eac57d;
     }
 
-    /* 漂浮動畫 */
+    /* 漂浮動畫：往上、高一點＋柔和呼吸 */
     @keyframes floatUp {
       0%   { opacity:0;  transform:translate(-50%, 32px) scale(0.96); }
       10%  { opacity:.96;transform:translate(-50%, 8px)  scale(1); }
@@ -198,10 +242,13 @@
 </header>
 
 <main>
-  <!-- 背景光雲：三層呼吸閃爍 -->
+  <!-- 背景光雲 -->
   <div class="halo h1"></div>
   <div class="halo h2"></div>
   <div class="halo h3"></div>
+
+  <!-- 金粉粒子層 -->
+  <div class="particle-layer" id="particle-layer"></div>
 
   <div id="placeholder">
     目前尚無祝福訊息，請貴賓於簽到頁面留下「迎賓祝福小語」，畫面將自動更新。
@@ -214,6 +261,7 @@
   const ENDPOINT="https://script.google.com/macros/s/AKfycbx3Ctad6gL8PTq37VhO9kIC80SwTKVlYymODj0DJWl9-v7fYCU_9mLcbhN4qWGV2zhkCw/exec";
   const layer=document.getElementById('blessing-layer');
   const placeholder=document.getElementById('placeholder');
+  const particleLayer=document.getElementById('particle-layer');
 
   let blessingsData=[];
   let blessingIndex=0;
@@ -262,8 +310,8 @@
     let placed=false, tries=0;
 
     while(tries<12 && !placed){
-      const left =15+Math.random()*70;
-      const top  =18+Math.random()*60;
+      const left =15+Math.random()*70;  // 15% ~ 85%
+      const top  =18+Math.random()*60; // 18% ~ 78%
       div.style.left=left+'%';
       div.style.top =top+'%';
 
@@ -272,7 +320,7 @@
       else tries++;
     }
 
-    const duration=26+Math.random()*16;
+    const duration=26+Math.random()*16;  // 26~42 秒
     div.style.animationDuration=duration+'s';
     div.style.visibility='visible';
 
@@ -310,9 +358,39 @@
     document.body.appendChild(s);
   }
 
+  // 定期產生新的浮動祝福（錯落出現）
   setInterval(spawnBlessing,2400);
   loadBlessings();
   setInterval(loadBlessings,10000);
+
+  // === 產生金粉粒子 ===
+  function initParticles(){
+    if(!particleLayer) return;
+    const COUNT = 38; // 顆數
+
+    for(let i=0;i<COUNT;i++){
+      const p=document.createElement('div');
+      p.className='particle';
+      const size = 3 + Math.random()*5; // 3~8px
+      p.style.width = size+'px';
+      p.style.height = size+'px';
+
+      const left = Math.random()*100;
+      const top  = Math.random()*100;
+
+      p.style.left = left+'%';
+      p.style.top  = top+'%';
+
+      const dur = 16 + Math.random()*18;      // 16~34s
+      const delay = -Math.random()*dur;       // 負 delay 讓粒子一開始就分散
+      p.style.animationDuration = dur+'s';
+      p.style.animationDelay    = delay+'s';
+
+      particleLayer.appendChild(p);
+    }
+  }
+
+  initParticles();
 </script>
 </body>
 </html>
