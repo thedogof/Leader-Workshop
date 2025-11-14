@@ -7,28 +7,17 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
 
-    /* === 整體背景：紙纖維肌理 × 灰金 === */
+    /* === 整體背景：柔和底色，紙感交給 main 處理 === */
     body{
       height:100vh;
       padding:16px 24px;
       font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;
-      /* 底色：溫和偏冷的象牙白 */
-      background-color:#f4f3ef;
-      /* 紙纖維感：細線＋大面積淡雜訊疊加 */
-      background-image:
-        /* 細橫纖維 */
-        repeating-linear-gradient(
-          180deg,
-          rgba(200,195,185,0.16) 0px,
-          rgba(200,195,185,0.16) 1px,
-          rgba(244,243,239,0) 2px,
-          rgba(244,243,239,0) 4px
-        ),
-        /* 大塊紙紋陰影 */
+      background:
         linear-gradient(
           135deg,
-          rgba(255,255,255,0.9),
-          rgba(235,231,223,0.95)
+          #f7f6f2 0%,
+          #f2efe7 55%,
+          #ebe4d7 100%
         );
       overflow:hidden;
       color:#8c7a5a;          /* 柔和灰金 */
@@ -68,6 +57,41 @@
       box-shadow:
         0 16px 42px rgba(150,140,120,.22),
         0 0 0 1px rgba(220,215,204,.9);
+      z-index:0;
+    }
+
+    /* === 紙纖維肌理（重點）：疊在 main 裡面 === */
+    main::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      /* 橫向細纖維 + 直向暗紋 + 零星紙點 */
+      background-image:
+        /* 橫向纖維 */
+        repeating-linear-gradient(
+          180deg,
+          rgba(180,170,150,0.15) 0px,
+          rgba(180,170,150,0.15) 1px,
+          transparent 3px,
+          transparent 5px
+        ),
+        /* 直向纖維 */
+        repeating-linear-gradient(
+          90deg,
+          rgba(205,195,180,0.10) 0px,
+          rgba(205,195,180,0.10) 1px,
+          transparent 4px,
+          transparent 7px
+        ),
+        /* 大顆粒紙點 */
+        radial-gradient(circle at 10% 20%, rgba(150,140,120,0.12) 0px, transparent 20px),
+        radial-gradient(circle at 72% 68%, rgba(160,150,130,0.10) 0px, transparent 22px),
+        radial-gradient(circle at 30% 82%, rgba(190,180,160,0.08) 0px, transparent 18px),
+        radial-gradient(circle at 85% 30%, rgba(170,160,140,0.10) 0px, transparent 20px);
+      opacity:0.5;
+      mix-blend-mode:multiply;
+      z-index:1;
     }
 
     /* === 背景光雲：更克制，偏冷灰金 === */
@@ -113,7 +137,7 @@
       position:absolute;
       inset:0;
       pointer-events:none;
-      z-index:1;
+      z-index:2;
       overflow:hidden;
     }
 
@@ -153,7 +177,7 @@
       position:absolute;
       inset:0;
       overflow:hidden;
-      z-index:3;
+      z-index:4;
       pointer-events:none;
     }
 
@@ -166,7 +190,7 @@
       font-size:1.3rem;
       color:#9b8764;
       text-shadow:0 0 4px rgba(255,252,242,.9);
-      z-index:2;
+      z-index:3;
       text-align:center;
       padding:0 40px;
     }
