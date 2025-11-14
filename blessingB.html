@@ -226,6 +226,7 @@
     let blessingsData = [];
     let blessingIndex = 0;
     const MAX_VISIBLE = 12;   // 同時最多幾則浮動祝福
+    const OVERLAP_PADDING = 18; // 矩形之間預留間距（像天燈不要撞在一起）
 
     function escapeHtml(str){
       return (str || '').replace(/[&<>"]/g, c => ({
@@ -237,29 +238,33 @@
       placeholder.style.display = show ? 'flex' : 'none';
     }
 
+    function isOverlapping(rect, others){
+      for (const o of others){
+        if (
+          rect.right  > o.left  - OVERLAP_PADDING &&
+          rect.left   < o.right + OVERLAP_PADDING &&
+          rect.bottom > o.top   - OVERLAP_PADDING &&
+          rect.top    < o.bottom+ OVERLAP_PADDING
+        ){
+          return true;
+        }
+      }
+      return false;
+    }
+
     function spawnBlessing(){
       if (!blessingsData.length) return;
 
       // 控制畫面上最多幾個
-      const existing = layer.querySelectorAll('.floating-blessing');
-      if (existing.length >= MAX_VISIBLE) return;
+      const existingEls = Array.from(layer.querySelectorAll('.floating-blessing'));
+      if (existingEls.length >= MAX_VISIBLE) return;
 
       const b = blessingsData[blessingIndex % blessingsData.length];
       blessingIndex++;
 
       const div = document.createElement('div');
       div.className = 'floating-blessing';
-
-      // 隨機位置（避免太邊邊）
-      const left = 15 + Math.random() * 70;   // 15% ~ 85%
-      const top  = 18 + Math.random() * 60;   // 18% ~ 78%
-
-      div.style.left = left + '%';
-      div.style.top  = top + '%';
-
-      // 每則略微不同節奏，停留久一點
-      const duration = 24 + Math.random() * 14; // 24~38 秒
-      div.style.animationDuration = duration + 's';
+      div.style.visibility = 'hidden'; // 先隱藏，避免閃現在奇怪位置
 
       div.innerHTML =
         '<span class="quote">' + escapeHtml(b.blessing) + '</span>' +
@@ -270,6 +275,37 @@
         '</div>';
 
       layer.appendChild(div);
+
+      // 先取得其他元素的 rect
+      const otherRects = existingEls.map(el => el.getBoundingClientRect());
+
+      let attempts = 0;
+      const maxAttempts = 10;
+      let placed = false;
+
+      while (attempts < maxAttempts && !placed){
+        const left = 15 + Math.random() * 70;   // 15% ~ 85%
+        const top  = 18 + Math.random() * 60;   // 18% ~ 78%
+        div.style.left = left + '%';
+        div.style.top  = top + '%';
+
+        const rect = div.getBoundingClientRect();
+        if (!isOverlapping(rect, otherRects)){
+          placed = true;
+        }else{
+          attempts++;
+        }
+      }
+
+      if (!placed){
+        // 實在擠不出地方，就勉強用最後一個位置，
+        // 或者你也可以選擇 div.remove(); return;
+      }
+
+      // 隨機一點動畫時間，停留久一點
+      const duration = 24 + Math.random() * 14; // 24~38 秒
+      div.style.animationDuration = duration + 's';
+      div.style.visibility = 'visible';
 
       // 動畫結束後移除
       setTimeout(() => {
