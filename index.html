@@ -52,9 +52,6 @@
     .bg-row:nth-child(3){ top:60%; }
     .bg-row:nth-child(4){ top:84%; }
 
-    /* 在每一排跑馬燈後面加一條深色半透明帶，讓字浮出來 */
-    
-
     .bg-marquee{
       display:inline-block;
       padding-left:100%;
@@ -67,7 +64,7 @@
       0%{transform:translateX(0)}
       100%{transform:translateX(-100%)}
     }
-       .bg-item{
+    .bg-item{
       display:inline-flex;
       align-items:baseline;
       margin:0 3rem;
@@ -269,6 +266,11 @@
           </div>
         </div>
 
+        <!-- 新增：車牌號碼欄位（非必填，只送到同一個試算表，不會出現在祝福牆） -->
+        <label for="carNo">車牌號碼（非必填）</label>
+        <input id="carNo" name="carNo" maxlength="20" placeholder="範例：ABC-1234" />
+        <p class="note">車牌號碼僅供停車消磁使用，會後不會留存資料。</p>
+
         <div class="bless-box">
           <div class="bless-header">
             <label for="blessing">迎賓祝福小語（非必填）</label>
@@ -285,7 +287,10 @@
         </div>
 
         <button type="submit" class="btn-full">送出簽到</button>
-        <p class="note">送出後系統會記錄簽到時間與 IP，祝福內容則用於現場祝福牆與背景展示。</p>
+        <p class="note">
+          送出後系統會記錄簽到時間與 IP，祝福內容將用於現場祝福牆與背景展示；
+          若有填寫車牌號碼，僅供停車消磁使用，會後不會留存資料。
+        </p>
       </form>
 
       <div class="footer">
@@ -353,6 +358,7 @@
         col.forEach(b => {
           const span = document.createElement('span');
           span.className = 'bg-item';
+          // 這裡只使用 blessing / name / unit / title，不會顯示車牌號碼
           span.innerHTML =
             '「' + escapeHtml(b.blessing) + '」' +
             '<span class="name">' + escapeHtml(b.name) + '</span>' +
